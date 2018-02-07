@@ -14,28 +14,268 @@
   </head>
   <body>
 
-    <test-fixture id="basicTestFixture">
+    <test-fixture id="default">
       <template>
-        <valle-select></valle-select>
+        <valle-select label="example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withHelperText">
+      <template>
+        <valle-select label="example" helpertext="helper example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withHelperTextAndError">
+      <template>
+        <valle-select label="example" helpertext="helper example" error></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextAndError">
+      <template>
+        <valle-select label="example" errortext="error example" error></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextErrorAndHelperText">
+      <template>
+        <valle-select label="example" errortext="error example" error helpertext="text example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextAndNoError">
+      <template>
+        <valle-select label="example" errortext="error example"></valle-select>
       </template>
     </test-fixture>
 
     <script>
-      suite('valle-select', () => {
+      suite('valle-select - default', () => {
 
-        let basicElement;
+        let selectDefault
 
         setup(() => {
-          basicElement = fixture('basicTestFixture');
+          selectDefault = fixture('default');
         });
 
-        test('a11y', () => {
-          // You awesome test rules
+        test('Should render the label with correct default props', () => {
+          const label = selectDefault.shadowRoot.querySelector('label');
+
+          assert.equal(label.nodeName, 'LABEL');
+
+          assert.equal(label.textContent, 'example')
+          assert.equal(label.id, 'label')
         });
 
-        a11ySuite('basicTestFixture');
+        test('Should render the input with correct default props', () => {
+          const input = selectDefault.shadowRoot.querySelector('input');
+
+          assert.equal(input.nodeName, 'INPUT');
+
+          assert.equal(input.type, 'text')
+          assert.equal(input.value, '');
+
+          assert.isTrue(input.hasAttribute('tabindex'))
+          assert.equal(input.getAttribute('tabindex'), '-1')
+
+          assert.isTrue(input.hasAttribute('aria-readonly'))
+          assert.equal(input.getAttribute('aria-readonly'), 'true')
+
+          assert.isTrue(input.hasAttribute('aria-owns'))
+          assert.equal(input.getAttribute('aria-owns'), 'listbox')
+
+        });
+
+        test('Should render the button with correct default props', () => {
+          const button = selectDefault.shadowRoot.querySelector('button');
+
+          assert.equal(button.nodeName, 'BUTTON');
+
+          assert.isTrue(button.hasAttribute('aria-haspopup'))
+          assert.equal(button.getAttribute('aria-haspopup'), 'listbox')
+
+          assert.isTrue(button.hasAttribute('aria-expanded'))
+          assert.equal(button.getAttribute('aria-expanded'), 'false')
+
+          assert.isTrue(button.hasAttribute('aria-pressed'))
+          assert.equal(button.getAttribute('aria-pressed'), 'false')
+
+          assert.isTrue(button.hasAttribute('aria-labelledby'))
+          assert.equal(button.getAttribute('aria-labelledby'), 'label button')
+
+          assert.isTrue(button.hasAttribute('aria-describedby'))
+          assert.equal(button.getAttribute('aria-describedby'), 'description')
+
+          assert.equal(button.id, 'button')
+          
+        });
+
+        test('Should render the listbox with correct default props', () => {
+          const listbox = selectDefault.shadowRoot.querySelector('ul');
+
+          assert.equal(listbox.nodeName, 'UL');
+
+          assert.isTrue(listbox.hasAttribute('role'))
+          assert.equal(listbox.getAttribute('role'), 'listbox')
+
+          assert.isTrue(listbox.hasAttribute('tabindex'))
+          assert.equal(listbox.getAttribute('tabindex'), '-1')
+
+          assert.equal(listbox.getAttribute('style'), 'display: none;')
+
+          assert.isTrue(listbox.hasAttribute('aria-labelledby'))
+          assert.equal(listbox.getAttribute('aria-labelledby'), 'label')
+
+          assert.isFalse(listbox.hasAttribute('aria-activedescendant'))
+
+          assert.equal(listbox.id, 'listbox')
+        });
+
+        test('Should render the Helper Text with correct default props', (done) => {
+          flush(() => {
+            const helperText = selectDefault.shadowRoot.querySelector('span');
+            assert.equal(helperText, null);
+            done();
+          })
+        });
+
+        test('Should render the Error Text with correct default props', (done) => {
+          flush(() => {
+            const errorText = selectDefault.shadowRoot.querySelector('small');
+            assert.equal(errorText, null);
+            done();
+          })
+        });
 
       });
+
+      suite('valle-select - With helper text', () => {
+
+        let selectWithHelperText,
+        selectWithHelperTextAndError;
+
+        setup(() => {
+          selectWithHelperText = fixture('withHelperText');
+          selectWithHelperTextAndError = fixture('withHelperTextAndError');
+        });
+
+        test('Should render the select with correct help text and no error', (done) => {
+          flush(() => {
+
+            const helperText = selectWithHelperText.shadowRoot.querySelector('span');
+            const ErrorText = selectWithHelperText.shadowRoot.querySelector('small');
+
+            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.textContent, 'helper example');
+
+            assert.equal(ErrorText, null);
+
+            done();
+          })
+        });
+
+        test('If error should render the select with helper text visible only for screen readers', (done) => {
+          flush(() => {
+
+            const helperText = selectWithHelperTextAndError.shadowRoot.querySelector('span');
+            const helperTextStyle = window.getComputedStyle(helperText, null);
+            const selectStyle = window.getComputedStyle(selectWithHelperTextAndError, null);
+
+            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.textContent, ': helper example');
+
+            assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
+            assert.equal(helperTextStyle.getPropertyValue('left'), '-10000px');
+
+            assert.equal(selectStyle.getPropertyValue('position'), 'relative');
+            assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
+
+            done()
+          })
+        });
+
+      });
+
+      suite('valle-select - with error and error text', () => {
+
+        // For match Firefox return in innerText
+        const removeSpecialCharacter = string => string.replace(/\n/g, '');
+
+        let selectWithErrorTextAndError,
+            selectWithErrorTextErrorAndHelperText,
+            selectWithErrorTextAndNoError;
+
+        setup(() => {
+          selectWithErrorTextAndError = fixture('withErrorTextAndError');
+          selectWithErrorTextErrorAndHelperText = fixture('withErrorTextErrorAndHelperText');
+          selectWithErrorTextAndNoError = fixture('withErrorTextAndNoError');
+        });
+
+        test('Should render the error text', (done) => {
+          flush(() => {
+
+            const errorText = selectWithErrorTextAndError.shadowRoot.querySelector('SMALL');
+            const helpText = selectWithErrorTextAndError.shadowRoot.querySelector('SPAN');
+           
+            assert.equal(helpText.textContent, ": ");
+
+            assert.equal(errorText.nodeName, 'SMALL');
+            assert.equal(removeSpecialCharacter(errorText.innerText), 'error example:');
+
+            done()
+          })
+        });
+
+        test('Should render the error text with invisible helper text', (done) => {
+          flush(() => {
+
+            const errorText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('SMALL');
+            const helperText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('span');
+            const helperTextStyle = window.getComputedStyle(helperText, null);
+            const selectStyle = window.getComputedStyle(selectWithErrorTextErrorAndHelperText, null);
+
+            assert.equal(removeSpecialCharacter(errorText.innerText), 'error example: text example');
+
+            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.innerText, ': text example');
+
+            assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
+            assert.equal(helperTextStyle.getPropertyValue('left'), '-10000px');
+
+            assert.equal(selectStyle.getPropertyValue('position'), 'relative');
+            assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
+
+            done()
+          })
+        });
+
+        test('Only render error text if error exist', (done) => {
+          flush(() => {
+
+            const errorTextBefore = selectWithErrorTextAndNoError.shadowRoot.querySelector('SMALL');
+            assert.equal(errorTextBefore, null);
+
+            selectWithErrorTextAndNoError.error = true;
+
+            flush(() => {
+              const errorTextAfter = selectWithErrorTextAndNoError.shadowRoot.querySelector('SMALL');
+              assert.equal(errorTextAfter.nodeName, 'SMALL');
+              done()
+            })
+            
+          })
+        });
+
+      })
+
+      // a11ySuite('default');
+      // a11ySuite('selectWithHelperText'); 
+      // a11ySuite('withHelperTextAndError');
+      // a11ySuite('withErrorTextAndError');
+      // a11ySuite('withErrorTextErrorAndHelperText');
+      // a11ySuite('withErrorTextAndNoError');
+
     </script>
 
   </body>
