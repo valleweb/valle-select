@@ -1,0 +1,39 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="valle-option">
+  <template>
+
+    <style>
+
+      :host {
+
+      }
+
+    </style>
+    
+    <slot></slot>
+
+  </template>
+
+  <script>
+    class valleOption extends Polymer.Element {
+
+      static get is() { return 'valle-option'; }
+
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.setAttribute('role', 'option');
+        this.setAttribute('aria-selected', 'false');
+
+      }
+
+      static get properties() {
+        return {};
+      }
+
+    }
+
+    window.customElements.define(valleOption.is, valleOption);
+  </script>
+</dom-module>

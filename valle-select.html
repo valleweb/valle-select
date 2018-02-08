@@ -6,17 +6,57 @@
     <style>
 
       :host {
-        display: block;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
       }
 
-      h1 {
-        @apply (--valle-element-text);
-        color: var(--valle-element-text-color, #f44277);
+      .visual-hidden {
+        position: absolute;
+        left: -10000px;
       }
 
     </style>
 
-    <h1>Hello [[prop1]]!</h1>
+    <label id="label">[[label]]</label>
+    
+    <input
+      type="text"
+      tabindex="-1"
+      aria-readonly="true"
+      aria-owns="listbox"
+      aria-labelledby="label">
+
+    <button
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-pressed="false"
+      aria-labelledby="label button"
+      aria-describedby="description"
+      id="button">
+
+    </button>
+
+    <ul 
+      role="listbox"
+      tabindex="-1"
+      style="display: none;"
+      aria-labelledby="label"
+      id="listbox">
+
+      <slot></slot>
+
+    </ul>
+
+    <template is="dom-if" if={{_isNoError(error,helpertext)}}>
+      <small id="description">[[helpertext]]</small>
+    </template>
+
+    <template is="dom-if" if=[[error]]>
+      <span id="description" role="alert">
+        [[errortext]]<small class="visual-hidden">: [[helpertext]]</small>
+      </span>
+    </template>
 
   </template>
 
@@ -25,12 +65,16 @@
 
       static get is() { return 'valle-select'; }
 
+      _isNoError(error, helperText) {
+        return !error && helperText;
+      }
+
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'World'
-          }
+          label: String,
+          helpertext: String,
+          errortext: String,
+          error: Boolean
         };
       }
 
