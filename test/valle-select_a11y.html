@@ -53,7 +53,7 @@
     <script>
       suite('valle-select - default', () => {
 
-        let selectDefault
+        let selectDefault;
 
         setup(() => {
           selectDefault = fixture('default');
@@ -64,8 +64,8 @@
 
           assert.equal(label.nodeName, 'LABEL');
 
-          assert.equal(label.textContent, 'example')
-          assert.equal(label.id, 'label')
+          assert.equal(label.textContent, 'example');
+          assert.equal(label.id, 'label');
         });
 
         test('Should render the input with correct default props', () => {
@@ -73,17 +73,17 @@
 
           assert.equal(input.nodeName, 'INPUT');
 
-          assert.equal(input.type, 'text')
+          assert.equal(input.type, 'text');
           assert.equal(input.value, '');
 
-          assert.isTrue(input.hasAttribute('tabindex'))
-          assert.equal(input.getAttribute('tabindex'), '-1')
+          assert.isTrue(input.hasAttribute('tabindex'));
+          assert.equal(input.getAttribute('tabindex'), '-1');
 
-          assert.isTrue(input.hasAttribute('aria-readonly'))
-          assert.equal(input.getAttribute('aria-readonly'), 'true')
+          assert.isTrue(input.hasAttribute('aria-readonly'));
+          assert.equal(input.getAttribute('aria-readonly'), 'true');
 
-          assert.isTrue(input.hasAttribute('aria-owns'))
-          assert.equal(input.getAttribute('aria-owns'), 'listbox')
+          assert.isTrue(input.hasAttribute('aria-owns'));
+          assert.equal(input.getAttribute('aria-owns'), 'listbox');
 
         });
 
@@ -92,22 +92,22 @@
 
           assert.equal(button.nodeName, 'BUTTON');
 
-          assert.isTrue(button.hasAttribute('aria-haspopup'))
-          assert.equal(button.getAttribute('aria-haspopup'), 'listbox')
+          assert.isTrue(button.hasAttribute('aria-haspopup'));
+          assert.equal(button.getAttribute('aria-haspopup'), 'listbox');
 
-          assert.isTrue(button.hasAttribute('aria-expanded'))
-          assert.equal(button.getAttribute('aria-expanded'), 'false')
+          assert.isTrue(button.hasAttribute('aria-expanded'));
+          assert.equal(button.getAttribute('aria-expanded'), 'false');
 
-          assert.isTrue(button.hasAttribute('aria-pressed'))
-          assert.equal(button.getAttribute('aria-pressed'), 'false')
+          assert.isTrue(button.hasAttribute('aria-pressed'));
+          assert.equal(button.getAttribute('aria-pressed'), 'false');
 
-          assert.isTrue(button.hasAttribute('aria-labelledby'))
-          assert.equal(button.getAttribute('aria-labelledby'), 'label button')
+          assert.isTrue(button.hasAttribute('aria-labelledby'));
+          assert.equal(button.getAttribute('aria-labelledby'), 'label button');
 
-          assert.isTrue(button.hasAttribute('aria-describedby'))
-          assert.equal(button.getAttribute('aria-describedby'), 'description')
+          assert.isTrue(button.hasAttribute('aria-describedby'));
+          assert.equal(button.getAttribute('aria-describedby'), 'description');
 
-          assert.equal(button.id, 'button')
+          assert.equal(button.id, 'button');
           
         });
 
@@ -116,20 +116,20 @@
 
           assert.equal(listbox.nodeName, 'UL');
 
-          assert.isTrue(listbox.hasAttribute('role'))
-          assert.equal(listbox.getAttribute('role'), 'listbox')
+          assert.isTrue(listbox.hasAttribute('role'));
+          assert.equal(listbox.getAttribute('role'), 'listbox');
 
-          assert.isTrue(listbox.hasAttribute('tabindex'))
-          assert.equal(listbox.getAttribute('tabindex'), '-1')
+          assert.isTrue(listbox.hasAttribute('tabindex'));
+          assert.equal(listbox.getAttribute('tabindex'), '-1');
 
-          assert.equal(listbox.getAttribute('style'), 'display: none;')
+          assert.equal(listbox.getAttribute('style'), 'display: none;');
 
-          assert.isTrue(listbox.hasAttribute('aria-labelledby'))
-          assert.equal(listbox.getAttribute('aria-labelledby'), 'label')
+          assert.isTrue(listbox.hasAttribute('aria-labelledby'));
+          assert.equal(listbox.getAttribute('aria-labelledby'), 'label');
 
-          assert.isFalse(listbox.hasAttribute('aria-activedescendant'))
+          assert.isFalse(listbox.hasAttribute('aria-activedescendant'));
 
-          assert.equal(listbox.id, 'listbox')
+          assert.equal(listbox.id, 'listbox');
         });
 
         test('Should render the Helper Text with correct default props', (done) => {
@@ -153,7 +153,7 @@
       suite('valle-select - With helper text', () => {
 
         let selectWithHelperText,
-        selectWithHelperTextAndError;
+            selectWithHelperTextAndError;
 
         setup(() => {
           selectWithHelperText = fixture('withHelperText');
@@ -164,12 +164,12 @@
           flush(() => {
 
             const helperText = selectWithHelperText.shadowRoot.querySelector('small');
-            const ErrorText = selectWithHelperText.shadowRoot.querySelector('span');
+            const errorText = selectWithHelperText.shadowRoot.querySelector('span');
 
             assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.textContent, 'helper example');
 
-            assert.equal(ErrorText, null);
+            assert.equal(errorText, null);
 
             done();
           })
@@ -191,7 +191,7 @@
             assert.equal(selectStyle.getPropertyValue('position'), 'relative');
             assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
 
-            done()
+            done();
           })
         });
 
@@ -223,10 +223,10 @@
             assert.equal(errorText.nodeName, 'SPAN');
             assert.equal(removeSpecialCharacter(errorText.innerText), 'error example:');
 
-            assert.isTrue(errorText.hasAttribute('role'))
-            assert.equal(errorText.getAttribute('role'), 'alert')
+            assert.isTrue(errorText.hasAttribute('role'));
+            assert.equal(errorText.getAttribute('role'), 'alert');
 
-            done()
+            done();
           })
         });
 
@@ -249,7 +249,7 @@
             assert.equal(selectStyle.getPropertyValue('position'), 'relative');
             assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
 
-            done()
+            done();
           })
         });
 
@@ -264,7 +264,7 @@
             flush(() => {
               const errorTextAfter = selectWithErrorTextAndNoError.shadowRoot.querySelector('span');
               assert.equal(errorTextAfter.nodeName, 'SPAN');
-              done()
+              done();
             })
             
           })
