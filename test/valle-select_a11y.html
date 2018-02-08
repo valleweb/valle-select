@@ -223,6 +223,9 @@
             assert.equal(errorText.nodeName, 'SMALL');
             assert.equal(removeSpecialCharacter(errorText.innerText), 'error example:');
 
+            assert.isTrue(errorText.hasAttribute('role'))
+            assert.equal(errorText.getAttribute('role'), 'alert')
+
             done()
           })
         });

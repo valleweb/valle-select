@@ -53,7 +53,7 @@
     </template>
 
     <template is="dom-if" if=[[error]]>
-      <small id="description">
+      <small id="description" role="alert">
         [[errortext]]<span class="visual-hidden">: [[helpertext]]</span>
       </small>
     </template>
