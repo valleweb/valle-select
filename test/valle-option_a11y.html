@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>valle-option a11y test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../valle-option.html">
+  </head>
+  <body>
+
+    <test-fixture id="default">
+      <template>
+        <valle-option>Content demo</valle-option>
+      </template>
+    </test-fixture>
+      
+    <script>
+      suite('valle-option - default', () => {
+
+        let optionDefault
+
+        setup(() => {
+          optionDefault = fixture('default');
+        });
+
+        test('Should render the valle-option with correct default props', () => {
+
+          assert.isTrue(optionDefault.hasAttribute('role'))
+          assert.equal(optionDefault.getAttribute('role'), 'option')
+
+          assert.isTrue(optionDefault.hasAttribute('aria-selected'))
+          assert.equal(optionDefault.getAttribute('aria-selected'), 'false')
+
+          assert.equal(optionDefault.innerText, 'Content demo')
+
+        });
+
+      });
+
+      // a11ySuite('default');
+      // a11ySuite('withMultipleOptions');
+
+    </script>
+
+  </body>
+</html>
