@@ -49,13 +49,13 @@
     </ul>
 
     <template is="dom-if" if={{_isNoError(error,helpertext)}}>
-      <span id="description">[[helpertext]]</span>
+      <small id="description">[[helpertext]]</small>
     </template>
 
     <template is="dom-if" if=[[error]]>
-      <small id="description" role="alert">
-        [[errortext]]<span class="visual-hidden">: [[helpertext]]</span>
-      </small>
+      <span id="description" role="alert">
+        [[errortext]]<small class="visual-hidden">: [[helpertext]]</small>
+      </span>
     </template>
 
   </template>

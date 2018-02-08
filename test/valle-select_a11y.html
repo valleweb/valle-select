@@ -134,7 +134,7 @@
 
         test('Should render the Helper Text with correct default props', (done) => {
           flush(() => {
-            const helperText = selectDefault.shadowRoot.querySelector('span');
+            const helperText = selectDefault.shadowRoot.querySelector('small');
             assert.equal(helperText, null);
             done();
           })
@@ -142,7 +142,7 @@
 
         test('Should render the Error Text with correct default props', (done) => {
           flush(() => {
-            const errorText = selectDefault.shadowRoot.querySelector('small');
+            const errorText = selectDefault.shadowRoot.querySelector('span');
             assert.equal(errorText, null);
             done();
           })
@@ -163,10 +163,10 @@
         test('Should render the select with correct help text and no error', (done) => {
           flush(() => {
 
-            const helperText = selectWithHelperText.shadowRoot.querySelector('span');
-            const ErrorText = selectWithHelperText.shadowRoot.querySelector('small');
+            const helperText = selectWithHelperText.shadowRoot.querySelector('small');
+            const ErrorText = selectWithHelperText.shadowRoot.querySelector('span');
 
-            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.textContent, 'helper example');
 
             assert.equal(ErrorText, null);
@@ -178,11 +178,11 @@
         test('If error should render the select with helper text visible only for screen readers', (done) => {
           flush(() => {
 
-            const helperText = selectWithHelperTextAndError.shadowRoot.querySelector('span');
+            const helperText = selectWithHelperTextAndError.shadowRoot.querySelector('small');
             const helperTextStyle = window.getComputedStyle(helperText, null);
             const selectStyle = window.getComputedStyle(selectWithHelperTextAndError, null);
 
-            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.textContent, ': helper example');
 
             assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
@@ -215,12 +215,12 @@
         test('Should render the error text', (done) => {
           flush(() => {
 
-            const errorText = selectWithErrorTextAndError.shadowRoot.querySelector('SMALL');
-            const helpText = selectWithErrorTextAndError.shadowRoot.querySelector('SPAN');
+            const errorText = selectWithErrorTextAndError.shadowRoot.querySelector('span');
+            const helpText = selectWithErrorTextAndError.shadowRoot.querySelector('small');
            
             assert.equal(helpText.textContent, ": ");
 
-            assert.equal(errorText.nodeName, 'SMALL');
+            assert.equal(errorText.nodeName, 'SPAN');
             assert.equal(removeSpecialCharacter(errorText.innerText), 'error example:');
 
             assert.isTrue(errorText.hasAttribute('role'))
@@ -233,14 +233,14 @@
         test('Should render the error text with invisible helper text', (done) => {
           flush(() => {
 
-            const errorText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('SMALL');
-            const helperText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('span');
+            const errorText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('span');
+            const helperText = selectWithErrorTextErrorAndHelperText.shadowRoot.querySelector('small');
             const helperTextStyle = window.getComputedStyle(helperText, null);
             const selectStyle = window.getComputedStyle(selectWithErrorTextErrorAndHelperText, null);
 
             assert.equal(removeSpecialCharacter(errorText.innerText), 'error example: text example');
 
-            assert.equal(helperText.nodeName, 'SPAN');
+            assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.innerText, ': text example');
 
             assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
@@ -256,14 +256,14 @@
         test('Only render error text if error exist', (done) => {
           flush(() => {
 
-            const errorTextBefore = selectWithErrorTextAndNoError.shadowRoot.querySelector('SMALL');
+            const errorTextBefore = selectWithErrorTextAndNoError.shadowRoot.querySelector('span');
             assert.equal(errorTextBefore, null);
 
             selectWithErrorTextAndNoError.error = true;
 
             flush(() => {
-              const errorTextAfter = selectWithErrorTextAndNoError.shadowRoot.querySelector('SMALL');
-              assert.equal(errorTextAfter.nodeName, 'SMALL');
+              const errorTextAfter = selectWithErrorTextAndNoError.shadowRoot.querySelector('span');
+              assert.equal(errorTextAfter.nodeName, 'SPAN');
               done()
             })
             
