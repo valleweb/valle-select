@@ -26,7 +26,8 @@
       tabindex="-1"
       aria-readonly="true"
       aria-owns="listbox"
-      aria-labelledby="label">
+      aria-labelledby="label"
+      id="input">
 
     <button
       aria-haspopup="listbox"
@@ -66,9 +67,42 @@
 
       static get is() { return 'valle-select'; }
 
+      constructor() {
+        super();
+        this.state = {
+          lastSelectedOption: null
+        }
+      }
+
       connectedCallback() {
         super.connectedCallback();
+        
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
+
+        // Options controls
+        // -----------------------------
+        const options = Polymer.dom(this).querySelectorAll('valle-option');
+        
+        if(options) {
+          options.forEach((option, index) => {
+            option.id = `listbox${index}`;
+            option.addEventListener('click', () => this._setSelectedStateToOption(option));
+          });
+        }
+        
+      }
+
+      _setSelectedStateToOption(option) {
+
+        this.$.input.value = option.value;
+        this.$.button.innerText = option.value;
+
+        this.$.listbox.setAttribute('aria-activedescendant', option.id);
+        option.setAttribute('aria-selected', 'true');
+
+        if(this.state.lastSelectedOption) this.state.lastSelectedOption.setAttribute('aria-selected', 'false');
+        this.state.lastSelectedOption = option;
+
       }
 
       _isNoError(error, helperText) {
@@ -113,17 +147,17 @@
           label: String,
           helpertext: String,
           errortext: String,
-          disabled: {
-            type:Boolean,
-            observer: '_toggleDisableObserver',
-            reflectToAttribute: true
-          },
-          error: Boolean,
           open: {
             type: Boolean,
             observer: '_toggleOpenObserver',
             reflectToAttribute: true
-          }
+          },
+          disabled: {
+            type: Boolean,
+            observer: '_toggleDisableObserver',
+            reflectToAttribute: true
+          },
+          error: Boolean
         };
       }
 

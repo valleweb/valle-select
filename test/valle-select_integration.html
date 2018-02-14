@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>valle-select integrations tests</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../polymer/polymer.html">
+
+    <link rel="import" href="../valle-select.html">
+    <link rel="import" href="../valle-option.html">
+
+  </head>
+  <body>
+
+    <test-fixture id="default">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">Option 1</valle-option>
+          <valle-option value="option 2">Option 2</valle-option>
+          <valle-option value="option 3">Option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('valle-option - integration', () => {
+
+        let selectDefault,
+            options;
+
+        setup(() => {
+          selectDefault = fixture('default');
+          options = selectDefault.querySelectorAll('valle-option');
+        });
+
+        test('Should add the dynamic id in all options', () => {
+          
+          assert.equal(options[0].id, 'listbox0');
+          assert.equal(options[1].id, 'listbox1');
+          assert.equal(options[2].id, 'listbox2');
+
+        });
+
+        test('When clicked, set the correct activedescendant in listbox', () => {
+
+          const listbox = selectDefault.shadowRoot.querySelector('#listbox');
+
+          assert.equal(listbox.getAttribute('aria-activedescendant'), null);
+
+          options[1].click();
+          assert.equal(listbox.getAttribute('aria-activedescendant'), options[1].id);
+
+          options[0].click();
+          assert.equal(listbox.getAttribute('aria-activedescendant'), options[0].id);
+
+        });
+
+        test('When clicked, get the option value and add on input and button', () => {
+      
+          const input = selectDefault.shadowRoot.querySelector('#input');
+          const button = selectDefault.shadowRoot.querySelector('#button');
+
+          options[0].click();
+          assert.equal(input.value, options[0].value);
+          assert.equal(button.innerText, options[0].value);
+
+          options[2].click();
+          assert.equal(input.value, options[2].value);
+          assert.equal(button.innerText, options[2].value);
+
+        });
+
+        test('When clicked, toggle the selected state', () => {
+          
+          assert.equal(options[0].getAttribute('aria-selected'), 'false');
+          assert.equal(options[1].getAttribute('aria-selected'), 'false');
+          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+
+          options[0].click();
+          assert.equal(options[0].getAttribute('aria-selected'), 'true');
+          assert.equal(options[1].getAttribute('aria-selected'), 'false');
+          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+
+          options[2].click();
+          assert.equal(options[0].getAttribute('aria-selected'), 'false');
+          assert.equal(options[1].getAttribute('aria-selected'), 'false');
+          assert.equal(options[2].getAttribute('aria-selected'), 'true');
+
+          options[1].click();
+          assert.equal(options[0].getAttribute('aria-selected'), 'false');
+          assert.equal(options[1].getAttribute('aria-selected'), 'true');
+          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+
+
+        });
+
+      });
+
+
+      //a11ySuite('default');
+
+    </script>
+
+  </body>
+</html>

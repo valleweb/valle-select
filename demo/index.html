@@ -34,43 +34,11 @@
       <demo-snippet class="centered-demo">
         <template>
 
-          <valle-select label="example" disabled>
-            <valle-option>Example 1</valle-option>
-            <valle-option>Example 2</valle-option>
-            <valle-option>Example 3</valle-option>
+          <valle-select label="example">
+            <valle-option value="option 1">Example 1</valle-option>
+            <valle-option value="option 2">Example 2</valle-option>
+            <valle-option value="option 3">Example 3</valle-option>
           </valle-select>
-
-        </template>
-      </demo-snippet>
-
-      <!-- With Prop - demo
-      ========================= -->
-
-      <h2>With Prop</h2>
-
-      <demo-snippet class="centered-demo">
-        <template>
-
-          <valle-select prop1="Human"></valle-select>
-
-        </template>
-      </demo-snippet>
-
-      <!-- Custom style - demo
-      ========================= -->
-
-      <h2>Custom style</h2>
-
-      <demo-snippet class="centered-demo">
-        <template>
-
-        <style is="custom-style">
-          .shiny {
-            --vsc-element-text-color: #a1f442;
-          }
-        </style>
-
-          <valle-select class="shiny"></valle-select>
 
         </template>
       </demo-snippet>

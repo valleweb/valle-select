@@ -56,6 +56,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="withRequired">
+      <template>
+        <valle-select required></valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('valle-select - default', () => {
 
@@ -81,6 +87,7 @@
 
           assert.equal(input.type, 'text');
           assert.equal(input.value, '');
+          assert.equal(input.id, 'input');
 
           assert.isTrue(input.disabled);
 
