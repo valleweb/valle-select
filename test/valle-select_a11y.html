@@ -50,6 +50,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="withDisabled">
+      <template>
+        <valle-select disabled></valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('valle-select - default', () => {
 
@@ -75,6 +81,8 @@
 
           assert.equal(input.type, 'text');
           assert.equal(input.value, '');
+
+          assert.isTrue(input.disabled);
 
           assert.isTrue(input.hasAttribute('tabindex'));
           assert.equal(input.getAttribute('tabindex'), '-1');
@@ -323,6 +331,58 @@
           select.open = true;
 
           assert.equal(select.hasAttribute('open'), true);
+
+        });
+
+      });
+
+      suite('valle-select - disabled behaviors', () => {
+
+        let select,
+            disabled;
+
+        setup(() => {
+          select = fixture('default');
+          disabled = fixture('withDisabled');
+        });
+
+        test('Should toggle the disabled state with change the disabled attribute', () => {
+
+          const button = select.shadowRoot.querySelector('#button')
+
+          assert.isFalse(button.disabled);
+
+          select.setAttribute('disabled', 'true');
+          assert.isTrue(button.disabled);
+
+          select.removeAttribute('disabled');
+          assert.isFalse(button.disabled);
+
+        });
+
+        test('Should toggle the disabled attribute with javascript API', () => {
+
+          const button = select.shadowRoot.querySelector('#button')
+
+          assert.isFalse(select.hasAttribute('disabled'));
+          assert.isFalse(button.disabled);
+
+          select.disabled = true;
+          assert.isTrue(select.hasAttribute('disabled'));
+          assert.isTrue(button.disabled);
+
+          select.disabled = false;
+          assert.isFalse(select.hasAttribute('disabled'));
+          assert.isFalse(button.disabled);
+
+        });
+
+        test('Should redner a disabled select with default', () => {
+
+          const button = disabled.shadowRoot.querySelector('#button')
+
+          assert.isTrue(disabled.hasAttribute('disabled'));
+          assert.isTrue(button.hasAttribute('disabled'));
 
         });
 
