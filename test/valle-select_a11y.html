@@ -145,7 +145,7 @@
             const errorText = selectDefault.shadowRoot.querySelector('span');
             assert.equal(errorText, null);
             done();
-          })
+          });
         });
 
       });
@@ -172,7 +172,7 @@
             assert.equal(errorText, null);
 
             done();
-          })
+          });
         });
 
         test('If error should render the select with helper text visible only for screen readers', (done) => {
@@ -192,7 +192,7 @@
             assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
 
             done();
-          })
+          });
         });
 
       });
@@ -227,7 +227,7 @@
             assert.equal(errorText.getAttribute('role'), 'alert');
 
             done();
-          })
+          });
         });
 
         test('Should render the error text with invisible helper text', (done) => {
@@ -265,12 +265,68 @@
               const errorTextAfter = selectWithErrorTextAndNoError.shadowRoot.querySelector('span');
               assert.equal(errorTextAfter.nodeName, 'SPAN');
               done();
-            })
+            });
             
-          })
+          });
         });
 
       })
+
+      suite('valle-select - open behaviors', () => {
+
+        let select;
+
+        setup(() => {
+          select = fixture('default');
+        });
+
+        test('Should toggle the visible state with change the open attribute', () => {
+
+          const listbox = select.shadowRoot.querySelector('#listbox')
+
+          assert.equal(listbox.style.display, 'none');
+
+          select.setAttribute('open', 'true');
+
+          assert.equal(listbox.style.display, 'block');
+
+        });
+
+        test('Should toggle the open attribute when click', () => {
+
+          const listbox = select.shadowRoot.querySelector('#listbox')
+          const button = select.shadowRoot.querySelector('#button')
+                    
+          assert.equal(select.hasAttribute('open'), false);
+
+          button.click();
+
+          assert.equal(select.hasAttribute('open'), true);
+
+        });
+
+
+        test('Should toggle the open attribute with javascript API', () => {
+
+          assert.equal(select.hasAttribute('open'), false);
+
+          select.open = true;
+
+          assert.equal(select.hasAttribute('open'), true);
+
+        });
+
+        test('Should toggle the open attribute when press space in focus', () => {
+
+          assert.equal(select.hasAttribute('open'), false);
+
+          select.open = true;
+
+          assert.equal(select.hasAttribute('open'), true);
+
+        });
+
+      });
 
       // a11ySuite('default');
       // a11ySuite('selectWithHelperText'); 

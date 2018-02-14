@@ -65,8 +65,36 @@
 
       static get is() { return 'valle-select'; }
 
+      connectedCallback() {
+        super.connectedCallback();
+        this.$.button.addEventListener('click', this._toggleOpen.bind(this));
+      }
+
       _isNoError(error, helperText) {
         return !error && helperText;
+      }
+
+      _toggleOpen() {
+        this.hasAttribute('open')
+        ? this.removeAttribute('open')
+        : this.setAttribute('open', 'true')
+      }
+
+      _toggleOpenObserver(boolean) {
+        
+        const listbox = this.$.listbox;
+        const button = this.$.button;
+
+        if(boolean) {
+          listbox.style.display = "block";
+          button.setAttribute('aria-expanded', 'true');
+          button.setAttribute('aria-pressed', 'true');
+        } else {
+          listbox.style.display = "none"
+          button.setAttribute('aria-expanded', 'false');
+          button.setAttribute('aria-pressed', 'false');
+        }
+
       }
 
       static get properties() {
@@ -74,7 +102,12 @@
           label: String,
           helpertext: String,
           errortext: String,
-          error: Boolean
+          error: Boolean,
+          open: {
+            type: Boolean,
+            observer: '_toggleOpenObserver',
+            reflectToAttribute: true
+          }
         };
       }
 
