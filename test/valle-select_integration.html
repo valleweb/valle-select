@@ -38,69 +38,85 @@
           options = selectDefault.querySelectorAll('valle-option');
         });
 
-        test('Should add the dynamic id in all options', () => {
+        test('Should add the dynamic id in all options', (done) => {
           
-          assert.equal(options[0].id, 'listbox0');
-          assert.equal(options[1].id, 'listbox1');
-          assert.equal(options[2].id, 'listbox2');
+          flush(() => {
+            assert.equal(options[0].id, 'listbox0');
+            assert.equal(options[1].id, 'listbox1');
+            assert.equal(options[2].id, 'listbox2');
+          })
+
+          done();
 
         });
 
-        test('When clicked, set the correct activedescendant in listbox', () => {
+        test('When clicked, set the correct activedescendant in listbox', (done) => {
 
-          const listbox = selectDefault.shadowRoot.querySelector('#listbox');
+          flush(() => {
+            const listbox = selectDefault.shadowRoot.querySelector('#listbox');
 
-          assert.equal(listbox.getAttribute('aria-activedescendant'), null);
+            assert.equal(listbox.getAttribute('aria-activedescendant'), null);
 
-          options[1].click();
-          assert.equal(listbox.getAttribute('aria-activedescendant'), options[1].id);
+            options[1].click();
+            assert.equal(listbox.getAttribute('aria-activedescendant'), options[1].id);
 
-          options[0].click();
-          assert.equal(listbox.getAttribute('aria-activedescendant'), options[0].id);
+            options[0].click();
+            assert.equal(listbox.getAttribute('aria-activedescendant'), options[0].id);
+          });
+
+          done();
 
         });
 
-        test('When clicked, get the option value and add on input and button', () => {
+        test('When clicked, get the option value and add on input and button', (done) => {
       
-          const input = selectDefault.shadowRoot.querySelector('#input');
-          const button = selectDefault.shadowRoot.querySelector('#button');
+          flush(() => {
+            const input = selectDefault.shadowRoot.querySelector('#input');
+            const button = selectDefault.shadowRoot.querySelector('#button');
 
-          options[0].click();
-          assert.equal(input.value, options[0].value);
-          assert.equal(button.innerText, options[0].value);
+            options[0].click();
+            assert.equal(input.value, options[0].value);
+            assert.equal(button.innerText, options[0].value);
 
-          options[2].click();
-          assert.equal(input.value, options[2].value);
-          assert.equal(button.innerText, options[2].value);
+            options[2].click();
+            assert.equal(input.value, options[2].value);
+            assert.equal(button.innerText, options[2].value);
+          });
+
+          done();
 
         });
 
-        test('When clicked, toggle the selected state', () => {
+        test('When clicked, toggle the selected state', (done) => {
           
-          assert.equal(options[0].getAttribute('aria-selected'), 'false');
-          assert.equal(options[1].getAttribute('aria-selected'), 'false');
-          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+          flush(() => {
 
-          options[0].click();
-          assert.equal(options[0].getAttribute('aria-selected'), 'true');
-          assert.equal(options[1].getAttribute('aria-selected'), 'false');
-          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+            assert.isFalse(options[0].hasAttribute('selected'));
+            assert.isFalse(options[1].hasAttribute('selected'));
+            assert.isFalse(options[2].hasAttribute('selected'));
 
-          options[2].click();
-          assert.equal(options[0].getAttribute('aria-selected'), 'false');
-          assert.equal(options[1].getAttribute('aria-selected'), 'false');
-          assert.equal(options[2].getAttribute('aria-selected'), 'true');
+            options[0].click();
+            assert.isTrue(options[0].hasAttribute('selected'));
+            assert.isFalse(options[1].hasAttribute('selected'));
+            assert.isFalse(options[2].hasAttribute('selected'));
 
-          options[1].click();
-          assert.equal(options[0].getAttribute('aria-selected'), 'false');
-          assert.equal(options[1].getAttribute('aria-selected'), 'true');
-          assert.equal(options[2].getAttribute('aria-selected'), 'false');
+            options[2].click();
+            assert.isFalse(options[0].hasAttribute('selected'));
+            assert.isFalse(options[1].hasAttribute('selected'));
+            assert.isTrue(options[2].hasAttribute('selected'));
 
+            options[1].click();
+            assert.isFalse(options[0].hasAttribute('selected'));
+            assert.isTrue(options[1].hasAttribute('selected'));
+            assert.isFalse(options[2].hasAttribute('selected'));
+
+          });
+
+          done();
 
         });
 
       });
-
 
       //a11ySuite('default');
 

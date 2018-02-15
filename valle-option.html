@@ -24,13 +24,30 @@
         super.connectedCallback();
 
         this.setAttribute('role', 'option');
-        this.setAttribute('aria-selected', 'false');
+        this.addEventListener('click', this._toggleSelected.bind(this));
+      }
 
+      _toggleSelected() {
+        this.hasAttribute('selected')
+        ? this.removeAttribute('selected')
+        : this.setAttribute('selected', 'true')
+      }
+
+      _toggleSelectedObserver(boolean) {
+        boolean
+        ? this.setAttribute('aria-selected', 'true')
+        : this.setAttribute('aria-selected', 'false')
       }
 
       static get properties() {
         return {
-          value: String
+          value: String,
+          selected: { 
+            type: Boolean,
+            value: false,
+            observer: '_toggleSelectedObserver',
+            reflectToAttribute: true
+          }
         };
       }
 

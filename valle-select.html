@@ -76,19 +76,33 @@
 
       connectedCallback() {
         super.connectedCallback();
-        
+
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
 
         // Options controls
         // -----------------------------
-        const options = Polymer.dom(this).querySelectorAll('valle-option');
-        
-        if(options) {
-          options.forEach((option, index) => {
-            option.id = `listbox${index}`;
-            option.addEventListener('click', () => this._setSelectedStateToOption(option));
-          });
-        }
+
+        Polymer.RenderStatus.afterNextRender(this, () => {
+          
+          const options = Polymer.dom(this).querySelectorAll('valle-option');
+          
+          if(options) {
+            options.forEach((option, index) => {
+
+              option.id = `listbox${index}`;
+
+              if(option.hasAttribute('selected')) {
+                this._setSelectedStateToOption(option);
+              }
+            
+              option.addEventListener('click', () => {
+                this._setSelectedStateToOption(option)
+              });
+            
+            });
+          }
+
+        });
         
       }
 
@@ -98,9 +112,8 @@
         this.$.button.innerText = option.value;
 
         this.$.listbox.setAttribute('aria-activedescendant', option.id);
-        option.setAttribute('aria-selected', 'true');
 
-        if(this.state.lastSelectedOption) this.state.lastSelectedOption.setAttribute('aria-selected', 'false');
+        if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
         this.state.lastSelectedOption = option;
 
       }
