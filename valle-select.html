@@ -74,42 +74,40 @@
         }
       }
 
-      connectedCallback() {
-        super.connectedCallback();
+      ready() {
+        super.ready();
 
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
 
         // Options controls
         // -----------------------------
-
-        Polymer.RenderStatus.afterNextRender(this, () => {
           
-          const options = Polymer.dom(this).querySelectorAll('valle-option');
+        const options = Polymer.dom(this).querySelectorAll('valle-option');
+        
+        if(options) {
+          options.forEach((option, index) => {
+
+            option.id = `listbox${index}`;
+
+            if(option.hasAttribute('selected')) {
+              this._setSelectedStateToOption(option);
+            }
           
-          if(options) {
-            options.forEach((option, index) => {
-
-              option.id = `listbox${index}`;
-
-              if(option.hasAttribute('selected')) {
-                this._setSelectedStateToOption(option);
-              }
-            
-              option.addEventListener('click', () => {
-                this._setSelectedStateToOption(option)
-              });
-            
+            option.addEventListener('click', () => {
+              this._setSelectedStateToOption(option)
             });
-          }
-
-        });
+          
+          });
+        }
         
       }
 
       _setSelectedStateToOption(option) {
 
-        this.$.input.value = option.value;
-        this.$.button.innerText = option.value;
+        const optionValue = option.getAttribute('value'); // TODO: Reolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
+
+        this.$.input.value = optionValue;
+        this.$.button.innerText = optionValue;
 
         this.$.listbox.setAttribute('aria-activedescendant', option.id);
 

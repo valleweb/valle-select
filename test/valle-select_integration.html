@@ -27,42 +27,49 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="withDefaultOption">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">Option 1</valle-option>
+          <valle-option value="option 2">Option 2</valle-option>
+          <valle-option selected value="option 3">Option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('valle-option - integration', () => {
 
         let selectDefault,
-            options;
+            options,
+            selectwithDefaultOption;
 
         setup(() => {
           selectDefault = fixture('default');
           options = selectDefault.querySelectorAll('valle-option');
+
+          selectwithDefaultOption = fixture('withDefaultOption');
         });
 
-        test('Should add the dynamic id in all options', (done) => {
+        test('Should add the dynamic id in all options', () => {
           
-          flush(() => {
-            assert.equal(options[0].id, 'listbox0');
-            assert.equal(options[1].id, 'listbox1');
-            assert.equal(options[2].id, 'listbox2');
-          })
-
-          done();
+          assert.equal(options[0].id, 'listbox0');
+          assert.equal(options[1].id, 'listbox1');
+          assert.equal(options[2].id, 'listbox2');
 
         });
 
         test('When clicked, set the correct activedescendant in listbox', (done) => {
 
-          flush(() => {
-            const listbox = selectDefault.shadowRoot.querySelector('#listbox');
+          const listbox = selectDefault.shadowRoot.querySelector('#listbox');
 
-            assert.equal(listbox.getAttribute('aria-activedescendant'), null);
+          assert.equal(listbox.getAttribute('aria-activedescendant'), null);
 
-            options[1].click();
-            assert.equal(listbox.getAttribute('aria-activedescendant'), options[1].id);
+          options[1].click();
+          assert.equal(listbox.getAttribute('aria-activedescendant'), options[1].id);
 
-            options[0].click();
-            assert.equal(listbox.getAttribute('aria-activedescendant'), options[0].id);
-          });
+          options[0].click();
+          assert.equal(listbox.getAttribute('aria-activedescendant'), options[0].id);
 
           done();
 
@@ -70,49 +77,56 @@
 
         test('When clicked, get the option value and add on input and button', (done) => {
       
-          flush(() => {
-            const input = selectDefault.shadowRoot.querySelector('#input');
-            const button = selectDefault.shadowRoot.querySelector('#button');
+          const input = selectDefault.shadowRoot.querySelector('#input');
+          const button = selectDefault.shadowRoot.querySelector('#button');
 
-            options[0].click();
-            assert.equal(input.value, options[0].value);
-            assert.equal(button.innerText, options[0].value);
+          options[0].click();
+          assert.equal(input.value, options[0].value);
+          assert.equal(button.innerText, options[0].value);
 
-            options[2].click();
-            assert.equal(input.value, options[2].value);
-            assert.equal(button.innerText, options[2].value);
-          });
+          options[2].click();
+          assert.equal(input.value, options[2].value);
+          assert.equal(button.innerText, options[2].value);
 
           done();
 
         });
 
         test('When clicked, toggle the selected state', (done) => {
-          
-          flush(() => {
 
-            assert.isFalse(options[0].hasAttribute('selected'));
-            assert.isFalse(options[1].hasAttribute('selected'));
-            assert.isFalse(options[2].hasAttribute('selected'));
+          assert.isFalse(options[0].hasAttribute('selected'));
+          assert.isFalse(options[1].hasAttribute('selected'));
+          assert.isFalse(options[2].hasAttribute('selected'));
 
-            options[0].click();
-            assert.isTrue(options[0].hasAttribute('selected'));
-            assert.isFalse(options[1].hasAttribute('selected'));
-            assert.isFalse(options[2].hasAttribute('selected'));
+          options[0].click();
+          assert.isTrue(options[0].hasAttribute('selected'));
+          assert.isFalse(options[1].hasAttribute('selected'));
+          assert.isFalse(options[2].hasAttribute('selected'));
 
-            options[2].click();
-            assert.isFalse(options[0].hasAttribute('selected'));
-            assert.isFalse(options[1].hasAttribute('selected'));
-            assert.isTrue(options[2].hasAttribute('selected'));
+          options[2].click();
+          assert.isFalse(options[0].hasAttribute('selected'));
+          assert.isFalse(options[1].hasAttribute('selected'));
+          assert.isTrue(options[2].hasAttribute('selected'));
 
-            options[1].click();
-            assert.isFalse(options[0].hasAttribute('selected'));
-            assert.isTrue(options[1].hasAttribute('selected'));
-            assert.isFalse(options[2].hasAttribute('selected'));
-
-          });
+          options[1].click();
+          assert.isFalse(options[0].hasAttribute('selected'));
+          assert.isTrue(options[1].hasAttribute('selected'));
+          assert.isFalse(options[2].hasAttribute('selected'));
 
           done();
+
+        });
+
+        test('Should render a select with default option', () => {
+          
+          const input = selectwithDefaultOption.shadowRoot.querySelector('#input');
+          const button = selectwithDefaultOption.shadowRoot.querySelector('#button');
+          const listbox = selectwithDefaultOption.shadowRoot.querySelector('#listbox');
+          const selectedOption = selectwithDefaultOption.querySelector('valle-option[selected]');
+          
+          assert.equal(input.value, selectedOption.value)
+          assert.equal(listbox.getAttribute('aria-activedescendant'), selectedOption.id)
+          assert.equal(button.innerText, selectedOption.value);
 
         });
 
