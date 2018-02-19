@@ -130,6 +130,20 @@
 
         });
 
+        test('When open, if no default option, should move the focus for the first option', () => {
+
+          selectDefault.open = true;
+          assert.equal(document.activeElement.value, 'option 1');
+
+        });
+
+        test('When open, should move the focus fot the selected option', () => {
+
+          selectwithDefaultOption.open = true;
+          assert.equal(document.activeElement.value, 'option 3');
+
+        });
+
       });
 
       //a11ySuite('default');

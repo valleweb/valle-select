@@ -42,6 +42,9 @@
           assert.isTrue(optionDefault.hasAttribute('role'));
           assert.equal(optionDefault.getAttribute('role'), 'option');
 
+          assert.isTrue(optionDefault.hasAttribute('tabindex'));
+          assert.equal(optionDefault.getAttribute('tabindex'), '0');
+
           assert.isTrue(optionDefault.hasAttribute('aria-selected'));
           assert.equal(optionDefault.getAttribute('aria-selected'), 'false');
 

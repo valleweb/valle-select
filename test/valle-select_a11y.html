@@ -6,10 +6,12 @@
 
     <title>valle-select a11y test</title>
 
+    <link rel="import" href="../../polymer/polymer.html">
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
+    <link rel="import" href="../../iron-test-helpers/mock-interactions.html">
 
-    <link rel="import" href="../../polymer/polymer.html">
     <link rel="import" href="../valle-select.html">
   </head>
   <body>
@@ -309,7 +311,6 @@
 
         test('Should toggle the open attribute when click', () => {
 
-          const listbox = select.shadowRoot.querySelector('#listbox')
           const button = select.shadowRoot.querySelector('#button')
                     
           assert.equal(select.hasAttribute('open'), false);
@@ -331,13 +332,28 @@
 
         });
 
-        test('Should toggle the open attribute when press space in focus', () => {
 
-          assert.equal(select.hasAttribute('open'), false);
+        test('Should toggle the open attribute when press up in button focus', () => {
 
-          select.open = true;
+          const button = select.shadowRoot.querySelector('#button')
 
-          assert.equal(select.hasAttribute('open'), true);
+          assert.isFalse(select.hasAttribute('open'));
+
+          MockInteractions.pressAndReleaseKeyOn(button, 38);
+
+          assert.isTrue(select.hasAttribute('open'));
+
+        });
+
+        test('Should toggle the open attribute when press down in button focus', () => {
+
+          const button = select.shadowRoot.querySelector('#button')
+
+          assert.isFalse(select.hasAttribute('open'));
+
+          MockInteractions.pressAndReleaseKeyOn(button, 40);
+
+          assert.isTrue(select.hasAttribute('open'));
 
         });
 

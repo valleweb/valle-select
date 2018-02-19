@@ -24,6 +24,7 @@
         super.connectedCallback();
 
         this.setAttribute('role', 'option');
+        this.setAttribute('tabindex', '0');
         this.addEventListener('click', this._toggleSelected.bind(this));
       }
 
