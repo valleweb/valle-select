@@ -27,6 +27,7 @@
       aria-readonly="true"
       aria-owns="listbox"
       aria-labelledby="label"
+      placeholder=[[placeholder]]
       id="input">
 
     <button
@@ -275,6 +276,7 @@
             observer: '_toggleDisableObserver',
             reflectToAttribute: true
           },
+          placeholder: String,
           error: Boolean
         };
       }

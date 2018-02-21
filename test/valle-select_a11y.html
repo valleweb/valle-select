@@ -64,6 +64,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="withPlaceholder">
+      <template>
+        <valle-select placeholder="Example"></valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('valle-select - default', () => {
 
@@ -410,6 +416,25 @@
         });
 
       });
+
+      suite('valle-select - default', () => {
+
+        let selectWithPlaceholder;
+
+        setup(() => {
+          selectWithPlaceholder = fixture('withPlaceholder');
+        });
+
+        test('Should render the correct input placeholder', () => {
+
+          const input = selectWithPlaceholder.shadowRoot.querySelector('#input');
+
+          assert.equal(input.placeholder, 'Example');
+
+        });
+
+      });
+
 
       // a11ySuite('default');
       // a11ySuite('selectWithHelperText'); 
