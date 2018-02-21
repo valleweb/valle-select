@@ -96,7 +96,11 @@
             option.addEventListener('click', () => {
               this._setSelectedStateToOption(option)
             });
-          
+
+            option.addEventListener('keydown', (event) => {
+              this._keydownControlSelectedState(event, index)
+            });
+
           });
         }
         
@@ -114,6 +118,81 @@
         if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
         this.state.lastSelectedOption = option;
 
+      }
+
+      _keydownControlSelectedState(event, index) {
+
+        const pressUp = event.which == 38 || event.keyCode == 38;
+        const pressDown = event.which == 40 || event.keyCode == 40;
+        const pressHome = event.which == 36 || event.keyCode == 36;
+        const pressEnd = event.which == 35 || event.keyCode == 35;
+        const pressPageUp = event.which == 33 || event.keyCode == 33;
+        const pressPageDown = event.which == 34 || event.keyCode == 34;
+        const pressEsc = event.which == 27 || event.keyCode == 27;
+        const pressSpace = event.which == 32 || event.keyCode == 32;
+        const pressEnter = event.which == 13 || event.keyCode == 13;
+
+        if (pressUp) {
+          event.preventDefault();
+          this._moveFocusToBackOption(index);
+        }
+        
+        if (pressDown) {
+          event.preventDefault();
+          this._moveFocusToNextOption(index);
+        }
+
+        if (pressHome) {
+          event.preventDefault();
+          this._moveFocusToFirstOption();
+        }
+
+        if (pressEnd) {
+          event.preventDefault();
+          this._moveFocusToLastOption();
+        }
+
+        if (pressPageUp) {
+          event.preventDefault();
+          this._moveFocusToFirstOption();
+        }
+
+        if (pressPageDown) {
+          event.preventDefault();
+          this._moveFocusToLastOption();
+        }
+
+        if (pressEsc) {
+          event.preventDefault();
+          this._toggleOpen();
+        }
+
+        if (pressEnter) {
+          event.preventDefault();
+          this._toggleOpen();
+        }
+
+        if (pressSpace) {
+          event.preventDefault();
+          this._toggleOpen();
+        }
+
+      }
+
+      _moveFocusToBackOption(currentIndex) {
+        this.state.allOptions[currentIndex - 1].focus();
+      }
+
+      _moveFocusToNextOption(currentIndex) {
+        this.state.allOptions[currentIndex + 1].focus();
+      }
+
+      _moveFocusToFirstOption() {
+        this.state.allOptions[0].focus();
+      }
+
+      _moveFocusToLastOption() {
+        this.state.allOptions[this.state.allOptions.length - 1].focus();
       }
 
       _isNoError(error, helperText) {

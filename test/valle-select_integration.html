@@ -8,6 +8,7 @@
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
+    <link rel="import" href="../../iron-test-helpers/mock-interactions.html">
 
     <link rel="import" href="../../polymer/polymer.html">
 
@@ -37,8 +38,20 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="open">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">Option 1</valle-option>
+          <valle-option value="option 2">Option 2</valle-option>
+          <valle-option selected value="option 3">Option 3</valle-option>
+          <valle-option value="option 4">Option 4</valle-option>
+          <valle-option value="option 5">Option 5</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
     <script>
-      suite('valle-option - integration', () => {
+      suite('Integration - basic', () => {
 
         let selectDefault,
             options,
@@ -92,7 +105,7 @@
 
         });
 
-        test('When clicked, toggle the selected state', (done) => {
+        test('When clicked should toggle the selected state', (done) => {
 
           assert.isFalse(options[0].hasAttribute('selected'));
           assert.isFalse(options[1].hasAttribute('selected'));
@@ -141,6 +154,118 @@
 
           selectwithDefaultOption.open = true;
           assert.equal(document.activeElement.value, 'option 3');
+
+        });
+
+      });
+
+      suite('Integration - keyboard controls', () => {
+
+        let openedSelect,
+            allOptions,
+            option1,
+            option2,
+            option3;
+
+        setup(() => {
+          openedSelect = fixture('open');
+          openedSelect.open = true;
+
+          allOptions = openedSelect.querySelectorAll('valle-option');
+          option1 = allOptions[0];
+          option2 = allOptions[1];
+          option3 = allOptions[2];
+          option4 = allOptions[3];
+          option5 = allOptions[4];
+        });
+
+        test('When press up arrow should move the focus for back option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 38);
+
+          assert.equal(document.activeElement.value, 'option 2');
+
+        });
+
+        test('When press down arrow should move the focus for next option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 40);
+
+          assert.equal(document.activeElement.value, 'option 4');
+
+        });
+
+        test('When press home should move the focus for first option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 36);
+
+          assert.equal(document.activeElement.value, 'option 1');
+        });
+
+
+        test('When press end should move the focus for last option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 35);
+
+          assert.equal(document.activeElement.value, 'option 5');
+
+        });
+
+        test('When press page up should move the focus for first option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 33);
+
+          assert.equal(document.activeElement.value, 'option 1');
+
+        });
+
+        test('When press page down should move the focus for last option', () => {
+
+          assert.equal(document.activeElement.value, 'option 3');
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 34);
+
+          assert.equal(document.activeElement.value, 'option 5');
+
+        });
+        
+        test('When press esc should close the select', () => {
+
+          assert.isTrue(openedSelect.open);
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 27);
+
+          assert.isFalse(openedSelect.open);
+
+        });
+
+        test('When press enter should close the select', () => {
+
+          assert.isTrue(openedSelect.open);
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 13);
+
+          assert.isFalse(openedSelect.open);
+
+        });
+
+        test('When press space should close the select', () => {
+
+          assert.isTrue(openedSelect.open);
+
+          MockInteractions.pressAndReleaseKeyOn(option3, 32);
+
+          assert.isFalse(openedSelect.open);
 
         });
 
