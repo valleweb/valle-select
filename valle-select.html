@@ -116,6 +116,7 @@
 
         const optionValue = option.getAttribute('value'); // TODO: Reolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
 
+        this.value = optionValue;
         this.$.input.value = optionValue;
         this.$.button.innerText = optionValue;
 
@@ -300,7 +301,8 @@
             reflectToAttribute: true
           },
           placeholder: String,
-          error: Boolean
+          error: Boolean,
+          value: String
         };
       }
 
