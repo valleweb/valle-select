@@ -147,8 +147,8 @@
           const listbox = selectwithDefaultOption.shadowRoot.querySelector('#listbox');
           const selectedOption = selectwithDefaultOption.querySelector('valle-option[selected]');
           
-          assert.equal(input.value, selectedOption.value)
-          assert.equal(listbox.getAttribute('aria-activedescendant'), selectedOption.id)
+          assert.equal(input.value, selectedOption.value);
+          assert.equal(listbox.getAttribute('aria-activedescendant'), selectedOption.id);
           assert.equal(button.innerText, selectedOption.value);
 
         });

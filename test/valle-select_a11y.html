@@ -305,7 +305,7 @@
 
         test('Should toggle the visible state with change the open attribute', () => {
 
-          const listbox = select.shadowRoot.querySelector('#listbox')
+          const listbox = select.shadowRoot.querySelector('#listbox');
 
           assert.equal(listbox.style.display, 'none');
 
@@ -317,7 +317,7 @@
 
         test('Should toggle the open attribute when click', () => {
 
-          const button = select.shadowRoot.querySelector('#button')
+          const button = select.shadowRoot.querySelector('#button');
                     
           assert.equal(select.hasAttribute('open'), false);
 
@@ -341,7 +341,7 @@
 
         test('Should toggle the open attribute when press up in button focus', () => {
 
-          const button = select.shadowRoot.querySelector('#button')
+          const button = select.shadowRoot.querySelector('#button');
 
           assert.isFalse(select.hasAttribute('open'));
 
@@ -353,7 +353,7 @@
 
         test('Should toggle the open attribute when press down in button focus', () => {
 
-          const button = select.shadowRoot.querySelector('#button')
+          const button = select.shadowRoot.querySelector('#button');
 
           assert.isFalse(select.hasAttribute('open'));
 
@@ -377,7 +377,7 @@
 
         test('Should toggle the disabled state with change the disabled attribute', () => {
 
-          const button = select.shadowRoot.querySelector('#button')
+          const button = select.shadowRoot.querySelector('#button');
 
           assert.isFalse(button.disabled);
 
@@ -391,7 +391,7 @@
 
         test('Should toggle the disabled attribute with javascript API', () => {
 
-          const button = select.shadowRoot.querySelector('#button')
+          const button = select.shadowRoot.querySelector('#button');
 
           assert.isFalse(select.hasAttribute('disabled'));
           assert.isFalse(button.disabled);
@@ -408,7 +408,7 @@
 
         test('Should redner a disabled select with default', () => {
 
-          const button = disabled.shadowRoot.querySelector('#button')
+          const button = disabled.shadowRoot.querySelector('#button');
 
           assert.isTrue(disabled.hasAttribute('disabled'));
           assert.isTrue(button.hasAttribute('disabled'));
