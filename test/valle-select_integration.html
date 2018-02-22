@@ -297,11 +297,11 @@
 
         test('When click in any option should close the select', () => {
 
-          assert.isTrue(openedSelect.open);
+          assert.isTrue(openedSelect.hasAttribute('open'));
 
           option3.click();
-
-          assert.isFalse(openedSelect.open);
+          
+          assert.isFalse(openedSelect.hasAttribute('open'));
 
         });
 
@@ -358,6 +358,38 @@
 
           assert.isFalse(selectWithRequired.hasAttribute('error'));
           
+        });
+
+      });
+
+      suite('Integration - current', () => {
+
+        let selectWithDefaultOption,
+            allOptions;
+
+        setup(() => {
+          selectWithDefaultOption = fixture('withDefaultOption');
+          allOptions = selectWithDefaultOption.querySelectorAll('valle-option');
+        });
+
+        test('Should return the current (selected) option via javascript api', () => {
+          assert.equal(selectWithDefaultOption.current, allOptions[2]);
+        });
+
+        test('Should set the current (selected) option via javascript api', () => {
+
+          const input = selectWithDefaultOption.shadowRoot.querySelector('#input');
+          const button = selectWithDefaultOption.shadowRoot.querySelector('#button');
+
+          assert.isFalse(allOptions[0].hasAttribute('selected'));
+
+          selectWithDefaultOption.current = allOptions[0];
+
+          assert.equal(input.value, allOptions[0].value);
+          assert.equal(button.innerText, allOptions[0].value);
+
+          assert.isTrue(allOptions[0].hasAttribute('selected'));
+
         });
 
       });
