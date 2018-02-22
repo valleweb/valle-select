@@ -173,6 +173,16 @@
 
         });
 
+        test('Should get all options from Javascript API', () => {
+
+          assert.equal(selectwithDefaultOption.options.length, 3);
+
+          assert.equal(selectwithDefaultOption.options[0].textContent, options[0].textContent)
+          assert.equal(selectwithDefaultOption.options[1].textContent, options[1].textContent)
+          assert.equal(selectwithDefaultOption.options[2].textContent, options[2].textContent)
+
+        });
+
       });
 
       suite('Integration - keyboard controls', () => {
