@@ -24,12 +24,43 @@
         super.connectedCallback();
 
         this.setAttribute('role', 'option');
-        this.setAttribute('aria-selected', 'false');
+        this.setAttribute('tabindex', '0');
+        this.addEventListener('click', this._toggleSelected.bind(this));
+        this.addEventListener('keydown', this._handleKeyDown.bind(this));
+      }
 
+      _handleKeyDown(e) {
+        const pressSpace = e.which == 32 || e.keyCode == 32;
+        const pressEnter = e.which == 13 || e.keyCode == 13;
+
+        if (pressSpace || pressEnter) {
+          e.preventDefault();
+          this.click();
+        }
+      }
+
+      _toggleSelected() {
+        this.hasAttribute('selected')
+        ? this.removeAttribute('selected')
+        : this.setAttribute('selected', 'true')
+      }
+
+      _toggleSelectedObserver(boolean) {
+        boolean
+        ? this.setAttribute('aria-selected', 'true')
+        : this.setAttribute('aria-selected', 'false')
       }
 
       static get properties() {
-        return {};
+        return {
+          value: String,
+          selected: { 
+            type: Boolean,
+            value: false,
+            observer: '_toggleSelectedObserver',
+            reflectToAttribute: true
+          }
+        };
       }
 
     }
