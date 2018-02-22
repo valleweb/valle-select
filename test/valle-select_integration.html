@@ -185,7 +185,7 @@
 
       });
 
-      suite('Integration - keyboard controls', () => {
+      suite('Integration - keyboard and close controls', () => {
 
         let openedSelect,
             allOptions,
@@ -290,6 +290,16 @@
           assert.isTrue(openedSelect.open);
 
           MockInteractions.pressAndReleaseKeyOn(option3, 32);
+
+          assert.isFalse(openedSelect.open);
+
+        });
+
+        test('When click in any option should close the select', () => {
+
+          assert.isTrue(openedSelect.open);
+
+          option3.click();
 
           assert.isFalse(openedSelect.open);
 
