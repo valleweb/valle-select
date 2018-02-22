@@ -82,6 +82,11 @@
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
         this.$.button.addEventListener('keydown', this._keydownToggleOpen.bind(this));
 
+        if (this.required) {
+          this.setAttribute('aria-required', true);
+          this.$.button.addEventListener('blur', this._validadeRequired.bind(this));
+        }
+
         // Options controls
         // -----------------------------
         
@@ -118,6 +123,8 @@
 
         if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
         this.state.lastSelectedOption = option;
+
+        if(this.error) this.removeAttribute('error');
 
       }
 
@@ -261,6 +268,19 @@
 
       }
 
+      _validadeRequired() {
+        if(!this.open) {
+
+          const inputValue = this.$.input.value;
+          const isEmpty = inputValue.length === 0;
+
+          isEmpty
+          ? this.setAttribute('error', true)
+          : this.removeAttribute('error')
+
+        }
+      }
+
       static get properties() {
         return {
           label: String,
@@ -271,6 +291,7 @@
             observer: '_toggleOpenObserver',
             reflectToAttribute: true
           },
+          required: Boolean,
           disabled: {
             type: Boolean,
             observer: '_toggleDisableObserver',

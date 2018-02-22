@@ -50,6 +50,16 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="required">
+      <template>
+        <valle-select required>
+          <valle-option value="option 1">Option 1</valle-option>
+          <valle-option value="option 2">Option 2</valle-option>
+          <valle-option value="option 3">Option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('Integration - basic', () => {
 
@@ -267,6 +277,61 @@
 
           assert.isFalse(openedSelect.open);
 
+        });
+
+      });
+
+      suite('Integration - required', () => {
+
+        let selectWithRequired;
+
+        setup(() => {
+          selectWithRequired = fixture('required');
+        });
+
+        test('Should render a semantic required select', () => {
+          assert.isTrue(selectWithRequired.hasAttribute('aria-required'));
+        });
+
+        test('Should send the error with blur (if input is empty)', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+          MockInteractions.blur(button);
+
+          assert.isTrue(selectWithRequired.hasAttribute('error'));
+
+        });
+        
+        test('Dont send the error with blur (if input has any content)', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          const input = selectWithRequired.shadowRoot.querySelector('#input');
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+          input.value = "Exemplo";
+
+          MockInteractions.blur(button);
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+        });
+
+        test('Should remove the error with any option is selected', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          MockInteractions.blur(button);
+
+          assert.isTrue(selectWithRequired.hasAttribute('error'));
+
+          const option = selectWithRequired.querySelectorAll('valle-option')[1];
+
+          option.click();
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+          
         });
 
       });
