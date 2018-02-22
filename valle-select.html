@@ -188,11 +188,13 @@
       }
 
       _moveFocusToBackOption(currentIndex) {
-        this.state.allOptions[currentIndex - 1].focus();
+        const isFisrt = currentIndex === 0;
+        if(!isFisrt) this.state.allOptions[currentIndex - 1].focus();
       }
 
       _moveFocusToNextOption(currentIndex) {
-        this.state.allOptions[currentIndex + 1].focus();
+        const isLast = currentIndex === this.state.allOptions.length - 1;
+        if(!isLast) this.state.allOptions[currentIndex + 1].focus();
       }
 
       _moveFocusToFirstOption() {
