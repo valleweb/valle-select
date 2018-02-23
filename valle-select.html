@@ -90,12 +90,12 @@
         // Options controls
         // -----------------------------
         
-        if(this.state.allOptions.length > 0) {
+        if (this.state.allOptions.length > 0) {
           this.state.allOptions.forEach((option, index) => {
 
             option.id = `listbox${index}`;
 
-            if(option.hasAttribute('selected')) {
+            if (option.hasAttribute('selected')) {
               this._setSelectedStateToOption(option);
             }
           
@@ -109,23 +109,14 @@
 
           });
         }
+
+        this.options = this.state.allOptions;
         
       }
 
       _setSelectedStateToOption(option) {
-
-        const optionValue = option.getAttribute('value'); // TODO: Reolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
-
-        this.$.input.value = optionValue;
-        this.$.button.innerText = optionValue;
-
-        this.$.listbox.setAttribute('aria-activedescendant', option.id);
-
-        if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
-        this.state.lastSelectedOption = option;
-
-        if(this.error) this.removeAttribute('error');
-
+        this.current = option;
+        this.open = false;
       }
 
       _keydownControlSelectedState(event, index) {
@@ -189,12 +180,12 @@
 
       _moveFocusToBackOption(currentIndex) {
         const isFisrt = currentIndex === 0;
-        if(!isFisrt) this.state.allOptions[currentIndex - 1].focus();
+        if (!isFisrt) this.state.allOptions[currentIndex - 1].focus();
       }
 
       _moveFocusToNextOption(currentIndex) {
         const isLast = currentIndex === this.state.allOptions.length - 1;
-        if(!isLast) this.state.allOptions[currentIndex + 1].focus();
+        if (!isLast) this.state.allOptions[currentIndex + 1].focus();
       }
 
       _moveFocusToFirstOption() {
@@ -220,7 +211,7 @@
         const listbox = this.$.listbox;
         const button = this.$.button;
 
-        if(boolean) {
+        if (boolean) {
 
           listbox.style.display = "block";
           button.setAttribute('aria-expanded', 'true');
@@ -235,7 +226,7 @@
           }
 
         } else {
-          listbox.style.display = "none"
+          listbox.style.display = "none";
           button.setAttribute('aria-expanded', 'false');
           button.setAttribute('aria-pressed', 'false');
           button.focus();
@@ -260,7 +251,7 @@
 
       }
 
-      _toggleDisableObserver(boolean) {
+      _toggleDisableObserver() {
 
         const button = this.$.button;
 
@@ -271,7 +262,7 @@
       }
 
       _validadeRequired() {
-        if(!this.open) {
+        if (!this.open) {
 
           const inputValue = this.$.input.value;
           const isEmpty = inputValue.length === 0;
@@ -281,6 +272,23 @@
           : this.removeAttribute('error')
 
         }
+      }
+
+      _setSelectedObserver(option) {
+
+        const optionValue = option.getAttribute('value'); // TODO: Resolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
+
+        this.value = optionValue;
+        this.$.input.value = optionValue;
+        this.$.button.innerText = optionValue;
+
+        this.$.listbox.setAttribute('aria-activedescendant', option.id);
+
+        if (this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
+        this.state.lastSelectedOption = option;
+
+        if (this.error) this.removeAttribute('error');
+
       }
 
       static get properties() {
@@ -300,7 +308,13 @@
             reflectToAttribute: true
           },
           placeholder: String,
-          error: Boolean
+          error: Boolean,
+          value: String,
+          options: Array,
+          current: {
+            type: String,
+            observer: '_setSelectedObserver'
+          }
         };
       }
 
