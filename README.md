@@ -13,10 +13,11 @@
 $ bower install valle-select --save
 ```
 
-2 -  Import the element:
+2 -  Import the elements:
 
 ```html
 <link rel="import" href="bower_components/valle-select/valle-select.html">
+<link rel="import" href="bower_components/valle-select/valle-option.html">
 ```
 
 3 - Start using it!
@@ -26,6 +27,7 @@ $ bower install valle-select --save
 <custom-element-demo>
   <template>
     <link rel="import" href="valle-select.html">
+    <link rel="import" href="valle-option.html">
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
@@ -33,24 +35,57 @@ $ bower install valle-select --save
 -->
 
 ```html
-<valle-select></valle-select>
+<valle-select label="Names" helpertext="Choose your name">
+  <valle-option value="option 1">Example 1</valle-option>
+  <valle-option value="option 2">Example 2</valle-option>
+  <valle-option value="option 3">Example 3</valle-option>
+</valle-select>
 ```
 
-## Properties
+## &lt;valle-select&gt;
 
-Property  | Type        | Default   | Description
-:---      |:---         |:---       |:---
-`prop1`   | *String*    | `World`   | Prop description
+### Properties
 
-## Styling
+Property      | Type        | Default   | Description
+:---          |:---         |:---       |:---
+`label`       | *String*    | `""`      | Default label
+`disabled`    | *Boolean*   | `false`   | Disabled state
+`required`    | *Boolean*   | `false`   | Required validate
+`helpertext`  | *String*    | `""`      | Description text for help
+`errortext`   | *String*    | `""`      | Error message
+`placeholder` | *String*    | `""`      | Default placeholder
+`error`       | *Boolean*   | `false`   | Error state
+`open`        | *Boolean*   | `false`   | Open state
+
+### Styling
 
 The following custom properties and mixins are available for styling:
 
-Custom property                | Default  | Description
-:---                           |:---      |:---
---valle-element-text-color       | #f44277  | Text color
---valle-element-text             | {}       | Text styles
+Custom property       | Default                  | Description
+:---                  |:---                      |:---
+--valle-select-color  | `rgba(5, 159, 183, .87)` | Primary color
 
+### API
+
+The following properties are available via javascript:
+
+Property    | Type      | Description
+:---        |:---       |:---
+value       | `String`  | Selected value
+disabled    | `Boolean` | Disabled state
+options     | `Array`   | All `valle-options` available
+open        | `Boolean` | Open state
+error       | `Boolean` | Error state
+current     | `Object`  | Selected `valle-options`
+
+## &lt;valle-option&gt;
+
+### Properties
+
+Property   | Type        | Default   | Description
+:---       |:---         |:---       |:---
+`selected` | *Boolean*   | `false`   | Selected state
+`value`    | *String*    | `""`      | Default value
 
 ## Browser Support
 
