@@ -105,11 +105,9 @@
 
           options[0].click();
           assert.equal(input.value, options[0].value);
-          assert.equal(button.innerText, options[0].value);
 
           options[2].click();
           assert.equal(input.value, options[2].value);
-          assert.equal(button.innerText, options[2].value);
 
           done();
 
@@ -149,7 +147,6 @@
           
           assert.equal(input.value, selectedOption.value);
           assert.equal(listbox.getAttribute('aria-activedescendant'), selectedOption.id);
-          assert.equal(button.innerText, selectedOption.value);
 
         });
 
@@ -386,7 +383,6 @@
           selectWithDefaultOption.current = allOptions[0];
 
           assert.equal(input.value, allOptions[0].value);
-          assert.equal(button.innerText, allOptions[0].value);
 
           //assert.isTrue(allOptions[0].hasAttribute('selected'));
 

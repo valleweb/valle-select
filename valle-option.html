@@ -6,7 +6,24 @@
     <style>
 
       :host {
+        min-height: 48px;
+        padding: 0 16px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+    
+      @media (min-width: 420px) {
+        :host {
+          min-height: 32px;
+          padding: 0 24px;
+          font-size: 15px;
+        }
+      }
 
+      :host(:focus) {
+        outline: none;
+        background-color: #eee;
       }
 
     </style>
@@ -27,6 +44,7 @@
         this.setAttribute('tabindex', '0');
         this.addEventListener('click', this._toggleSelected.bind(this));
         this.addEventListener('keydown', this._handleKeyDown.bind(this));
+        this.addEventListener('mouseover', this._handleHover.bind(this));
       }
 
       _handleKeyDown(e) {
@@ -49,6 +67,10 @@
         boolean
         ? this.setAttribute('aria-selected', 'true')
         : this.setAttribute('aria-selected', 'false')
+      }
+
+      _handleHover() {
+        this.focus();
       }
 
       static get properties() {

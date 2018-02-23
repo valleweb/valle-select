@@ -8,18 +8,143 @@
       :host {
         display: inline-block;
         position: relative;
-        overflow: hidden;
+        width: 100%;
       }
 
       .visual-hidden {
+        opacity: 0;
+      }
+
+      .input {
+        box-sizing: border-box;
+        border: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, .87);
+        color: rgba(0, 0, 0, .87);
+        display: block;
+        font-size: 16px;
+        margin-top: 29px;
+        outline: 0;
+        padding: 8px 24px 8px 0;
+        width: 100%;
+      }
+
+      .label {
+        color: rgba(0, 0, 0, .54);
+        font-size: 12px;
+        left: 0;
+        padding-top: 16px;
         position: absolute;
-        left: -10000px;
+        top: 0;
+      }
+
+      .button:focus .icon {
+        fill: var(--valle-input-color, rgba(5, 159, 183, .87));
+      }
+
+      .button:focus + .input + .label {
+        color: var(--valle-input-color, rgba(5, 159, 183, .87));
+      }
+
+      .button:focus + .input {
+        border-color: var(--valle-input-color, rgba(5, 159, 183, .87));
+      }
+
+      .button {
+        background: transparent;
+        border: 0;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        right: 0;
+        top: 28px;
+      }
+      
+      .button:focus {
+        outline: none;
+      }
+
+      .description {
+        color: rgba(0, 0, 0, .54);
+        display: block;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      .listbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background:#fff;
+        width: 100%;
+        z-index: 2;
+        padding: 8px 0;
+        margin: 0;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      :host([error]) .description,
+      :host([error]) .label,
+      :host([error]) .button:focus + .label {
+        color: rgba(255, 0, 0, .87);
+      }
+
+      :host([error]) .input {
+        border-color: rgb(255, 0, 0);
+      }
+
+      :host([error]) .icon {
+        fill: rgb(255, 0, 0);
+      }
+
+      :host([disabled]) .input {
+        background-color: initial;
+        border-bottom: 1px dotted rgba(0, 0, 0, .42);
+        color: rgba(0, 0, 0, .38);
+      }
+
+      :host([disabled]) .label {
+        color: rgba(0, 0, 0, .38);
+      }
+
+      :host([disabled]) .icon {
+        fill: rgba(0, 0, 0, .38);
+      }
+
+
+      :host([required]) .label::after {
+        content: ' *';
       }
 
     </style>
-
-    <label id="label">[[label]]</label>
     
+    <button
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-pressed="false"
+      aria-labelledby="label input"
+      aria-describedby="description"
+      id="button"
+      class="button">
+
+      <svg 
+        fill="#000000"
+        height="24"
+        viewBox="0 0 24 24" 
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon">
+
+        <path d="M7 10l5 5 5-5z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+
+      </svg>
+
+    </button>
+
     <input
       type="text"
       disabled
@@ -28,35 +153,29 @@
       aria-owns="listbox"
       aria-labelledby="label"
       placeholder=[[placeholder]]
-      id="input">
+      id="input"
+      class="input">
 
-    <button
-      aria-haspopup="listbox"
-      aria-expanded="false"
-      aria-pressed="false"
-      aria-labelledby="label button"
-      aria-describedby="description"
-      id="button">
-
-    </button>
+    <label id="label" class="label">[[label]]</label>
 
     <ul 
       role="listbox"
       tabindex="-1"
       style="display: none;"
       aria-labelledby="label"
-      id="listbox">
+      id="listbox"
+      class="listbox">
 
       <slot></slot>
 
     </ul>
 
     <template is="dom-if" if={{_isNoError(error,helpertext)}}>
-      <small id="description">[[helpertext]]</small>
+      <small id="description" class="description">[[helpertext]]</small>
     </template>
 
     <template is="dom-if" if=[[error]]>
-      <span id="description" role="alert">
+      <span id="description" role="alert"  class="description">
         [[errortext]]<small class="visual-hidden">: [[helpertext]]</small>
       </span>
     </template>
@@ -280,7 +399,6 @@
 
         this.value = optionValue;
         this.$.input.value = optionValue;
-        this.$.button.innerText = optionValue;
 
         this.$.listbox.setAttribute('aria-activedescendant', option.id);
 
