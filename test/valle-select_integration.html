@@ -167,9 +167,25 @@
 
         });
 
+        test('Should get the value from Javascript API', () => {
+
+          assert.equal(selectwithDefaultOption.value, 'option 3');
+
+        });
+
+        test('Should get all options from Javascript API', () => {
+
+          assert.equal(selectwithDefaultOption.options.length, 3);
+
+          assert.equal(selectwithDefaultOption.options[0].textContent, options[0].textContent)
+          assert.equal(selectwithDefaultOption.options[1].textContent, options[1].textContent)
+          assert.equal(selectwithDefaultOption.options[2].textContent, options[2].textContent)
+
+        });
+
       });
 
-      suite('Integration - keyboard controls', () => {
+      suite('Integration - keyboard and close controls', () => {
 
         let openedSelect,
             allOptions,
@@ -279,6 +295,16 @@
 
         });
 
+        test('When click in any option should close the select', () => {
+
+          assert.isTrue(openedSelect.hasAttribute('open'));
+
+          option3.click();
+          
+          assert.isFalse(openedSelect.hasAttribute('open'));
+
+        });
+
       });
 
       suite('Integration - required', () => {
@@ -336,8 +362,41 @@
 
       });
 
-      //a11ySuite('default');
+      suite('Integration - current', () => {
 
+        let selectWithDefaultOption,
+            allOptions;
+
+        setup(() => {
+          selectWithDefaultOption = fixture('withDefaultOption');
+          allOptions = selectWithDefaultOption.querySelectorAll('valle-option');
+        });
+
+        test('Should return the current (selected) option via javascript api', () => {
+          assert.equal(selectWithDefaultOption.current, allOptions[2]);
+        });
+
+        test('Should set the current (selected) option via javascript api', () => {
+
+          const input = selectWithDefaultOption.shadowRoot.querySelector('#input');
+          const button = selectWithDefaultOption.shadowRoot.querySelector('#button');
+
+          assert.isFalse(allOptions[0].hasAttribute('selected'));
+
+          selectWithDefaultOption.current = allOptions[0];
+
+          assert.equal(input.value, allOptions[0].value);
+          assert.equal(button.innerText, allOptions[0].value);
+
+          assert.isTrue(allOptions[0].hasAttribute('selected'));
+
+        });
+
+      });
+
+      a11ySuite('default', ['badAriaAttributeValue']);
+      a11ySuite('required', ['badAriaAttributeValue']);
+      
     </script>
 
   </body>

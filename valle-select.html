@@ -109,23 +109,14 @@
 
           });
         }
+
+        this.options = this.state.allOptions;
         
       }
 
       _setSelectedStateToOption(option) {
-
-        const optionValue = option.getAttribute('value'); // TODO: Reolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
-
-        this.$.input.value = optionValue;
-        this.$.button.innerText = optionValue;
-
-        this.$.listbox.setAttribute('aria-activedescendant', option.id);
-
-        if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
-        this.state.lastSelectedOption = option;
-
-        if(this.error) this.removeAttribute('error');
-
+        this.current = option;
+        this.open = false;
       }
 
       _keydownControlSelectedState(event, index) {
@@ -283,6 +274,23 @@
         }
       }
 
+      _setSelectedObserver(option) {
+
+        const optionValue = option.getAttribute('value'); // TODO: Reolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
+
+        this.value = optionValue;
+        this.$.input.value = optionValue;
+        this.$.button.innerText = optionValue;
+
+        this.$.listbox.setAttribute('aria-activedescendant', option.id);
+
+        if(this.state.lastSelectedOption) this.state.lastSelectedOption.removeAttribute('selected');
+        this.state.lastSelectedOption = option;
+
+        if(this.error) this.removeAttribute('error');
+
+      }
+
       static get properties() {
         return {
           label: String,
@@ -300,7 +308,13 @@
             reflectToAttribute: true
           },
           placeholder: String,
-          error: Boolean
+          error: Boolean,
+          value: String,
+          options: Array,
+          current: {
+            type: String,
+            observer: '_setSelectedObserver'
+          }
         };
       }
 
