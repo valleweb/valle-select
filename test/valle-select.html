@@ -125,7 +125,7 @@
           assert.equal(button.getAttribute('aria-pressed'), 'false');
 
           assert.isTrue(button.hasAttribute('aria-labelledby'));
-          assert.equal(button.getAttribute('aria-labelledby'), 'label button');
+          assert.equal(button.getAttribute('aria-labelledby'), 'label input');
 
           assert.isTrue(button.hasAttribute('aria-describedby'));
           assert.equal(button.getAttribute('aria-describedby'), 'description');
@@ -207,12 +207,7 @@
 
             assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.textContent, ': helper example');
-
-            assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
-            assert.equal(helperTextStyle.getPropertyValue('left'), '-10000px');
-
-            assert.equal(selectStyle.getPropertyValue('position'), 'relative');
-            assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
+            assert.equal(helperTextStyle.getPropertyValue('opacity'), '0');
 
             done();
           });
@@ -266,11 +261,7 @@
             assert.equal(helperText.nodeName, 'SMALL');
             assert.equal(helperText.innerText, ': text example');
 
-            assert.equal(helperTextStyle.getPropertyValue('position'), 'absolute');
-            assert.equal(helperTextStyle.getPropertyValue('left'), '-10000px');
-
-            assert.equal(selectStyle.getPropertyValue('position'), 'relative');
-            assert.equal(selectStyle.getPropertyValue('overflow'), 'hidden');
+            assert.equal(helperTextStyle.getPropertyValue('opacity'), '0');
 
             done();
           })
