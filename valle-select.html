@@ -197,14 +197,16 @@
   <script>
     class valleElement extends Polymer.Element {
 
-      static get is() { return 'valle-select'; }
+      static get is() { 
+        return 'valle-select';
+      }
 
       constructor() {
         super();
         this.state = {
           lastSelectedOption: null,
           allOptions: Polymer.dom(this).querySelectorAll('valle-option')
-        }
+        };
       }
 
       ready() {
@@ -232,11 +234,11 @@
             }
           
             option.addEventListener('click', () => {
-              this._setSelectedStateToOption(option)
+              this._setSelectedStateToOption(option);
             });
 
             option.addEventListener('keydown', (event) => {
-              this._keydownControlSelectedState(event, index)
+              this._keydownControlSelectedState(event, index);
             });
 
           });
@@ -253,15 +255,15 @@
 
       _keydownControlSelectedState(event, index) {
 
-        const pressUp = event.which == 38 || event.keyCode == 38;
-        const pressDown = event.which == 40 || event.keyCode == 40;
-        const pressHome = event.which == 36 || event.keyCode == 36;
-        const pressEnd = event.which == 35 || event.keyCode == 35;
-        const pressPageUp = event.which == 33 || event.keyCode == 33;
-        const pressPageDown = event.which == 34 || event.keyCode == 34;
-        const pressEsc = event.which == 27 || event.keyCode == 27;
-        const pressSpace = event.which == 32 || event.keyCode == 32;
-        const pressEnter = event.which == 13 || event.keyCode == 13;
+        const pressUp = event.which === 38 || event.keyCode === 38;
+        const pressDown = event.which === 40 || event.keyCode === 40;
+        const pressHome = event.which === 36 || event.keyCode === 36;
+        const pressEnd = event.which === 35 || event.keyCode === 35;
+        const pressPageUp = event.which === 33 || event.keyCode === 33;
+        const pressPageDown = event.which === 34 || event.keyCode === 34;
+        const pressEsc = event.which === 27 || event.keyCode === 27;
+        const pressSpace = event.which === 32 || event.keyCode === 32;
+        const pressEnter = event.which === 13 || event.keyCode === 13;
 
         if (pressUp) {
           event.preventDefault();
@@ -334,8 +336,8 @@
 
       _toggleOpen() {
         this.hasAttribute('open')
-        ? this.removeAttribute('open')
-        : this.setAttribute('open', 'true')
+          ? this.removeAttribute('open')
+          : this.setAttribute('open', 'true');
       }
 
       _toggleOpenObserver(boolean) {
@@ -345,11 +347,11 @@
 
         if (boolean) {
 
-          listbox.style.display = "block";
+          listbox.style.display = 'block';
           button.setAttribute('aria-expanded', 'true');
           button.setAttribute('aria-pressed', 'true');
 
-           if (this.state.allOptions.length > 0) {
+          if (this.state.allOptions.length > 0) {
             this.state.allOptions[0].focus();
 
             this.state.allOptions.forEach((option) => {
@@ -358,7 +360,7 @@
           }
 
         } else {
-          listbox.style.display = "none";
+          listbox.style.display = 'none';
           button.setAttribute('aria-expanded', 'false');
           button.setAttribute('aria-pressed', 'false');
           button.focus();
@@ -367,9 +369,9 @@
       }
 
       _keydownToggleOpen(event) {
-        const pressEnter = event.which == 13 || event.keyCode == 13;
-        const pressUp = event.which == 38 || event.keyCode == 38;
-        const pressDown = event.which == 40 || event.keyCode == 40;
+        const pressEnter = event.which === 13 || event.keyCode === 13;
+        const pressUp = event.which === 38 || event.keyCode === 38;
+        const pressDown = event.which === 40 || event.keyCode === 40;
         const pressArows = pressUp || pressDown;
 
         if (pressEnter) {
@@ -389,12 +391,12 @@
         const input = this.$.input;
 
         button.hasAttribute('disabled')
-        ? button.removeAttribute('disabled')
-        : button.setAttribute('disabled', 'true')
+          ? button.removeAttribute('disabled')
+          : button.setAttribute('disabled', 'true');
 
         input.hasAttribute('disabled')
-        ? input.removeAttribute('disabled')
-        : input.setAttribute('disabled', 'true')
+          ? input.removeAttribute('disabled')
+          : input.setAttribute('disabled', 'true');
 
       }
 
@@ -405,8 +407,8 @@
           const isEmpty = inputValue.length === 0;
 
           isEmpty
-          ? this.setAttribute('error', true)
-          : this.removeAttribute('error')
+            ? this.setAttribute('error', true)
+            : this.removeAttribute('error');
 
         }
       }
