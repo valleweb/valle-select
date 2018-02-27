@@ -29,6 +29,10 @@
         width: 100%;
       }
 
+      .input:hover {
+        cursor: pointer;
+      }
+
       .label {
         color: rgba(0, 0, 0, .54);
         font-size: 12px;
@@ -62,6 +66,10 @@
         top: 28px;
       }
       
+      .button:hover {
+        cursor: pointer;
+      }
+
       .button:focus {
         outline: none;
       }
@@ -85,6 +93,10 @@
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
                     0 1px 5px 0 rgba(0, 0, 0, 0.12),
                     0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      .listbox:hover {
+        cursor: pointer;
       }
 
       :host([error]) .description,
@@ -147,7 +159,7 @@
 
     <input
       type="text"
-      disabled
+      readonly
       tabindex="-1"
       aria-readonly="true"
       aria-owns="listbox"
@@ -199,6 +211,7 @@
         super.ready();
 
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
+        this.$.input.addEventListener('click', this._toggleOpen.bind(this));
         this.$.button.addEventListener('keydown', this._keydownToggleOpen.bind(this));
 
         if (this.required) {
@@ -373,10 +386,15 @@
       _toggleDisableObserver() {
 
         const button = this.$.button;
+        const input = this.$.input;
 
         button.hasAttribute('disabled')
         ? button.removeAttribute('disabled')
         : button.setAttribute('disabled', 'true')
+
+        input.hasAttribute('disabled')
+        ? input.removeAttribute('disabled')
+        : input.setAttribute('disabled', 'true')
 
       }
 

@@ -12,13 +12,17 @@
         display: flex;
         align-items: center;
       }
-    
+
       @media (min-width: 420px) {
         :host {
           min-height: 32px;
           padding: 0 24px;
           font-size: 15px;
         }
+      }
+
+      :host(:hover) {
+        cursor: pointer;
       }
 
       :host(:focus) {
