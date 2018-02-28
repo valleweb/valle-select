@@ -81,13 +81,22 @@
         padding-top: 8px;
       }
 
+      .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+
       .listbox {
         position: absolute;
         top: 0;
         left: 0;
         background:#fff;
         width: 100%;
-        z-index: 2;
+        z-index: 3;
         padding: 8px 0;
         margin: 0;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
@@ -132,7 +141,9 @@
       }
 
     </style>
-    
+
+    <div class="backdrop" id="backdrop" style="display: none;"></div>
+
     <button
       aria-haspopup="listbox"
       aria-expanded="false"
@@ -215,6 +226,7 @@
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
         this.$.input.addEventListener('click', this._toggleOpen.bind(this));
         this.$.button.addEventListener('keydown', this._keydownToggleOpen.bind(this));
+        this.$.backdrop.addEventListener('click', this._close.bind(this));
 
         if (this.required) {
           this.setAttribute('aria-required', true);
@@ -359,13 +371,21 @@
             });
           }
 
+          this.$.backdrop.style.display = 'block';
+
         } else {
           listbox.style.display = 'none';
           button.setAttribute('aria-expanded', 'false');
           button.setAttribute('aria-pressed', 'false');
           button.focus();
+          
+          this.$.backdrop.style.display = 'none';
         }
 
+      }
+
+      _close() {
+          this.open = false;
       }
 
       _keydownToggleOpen(event) {
