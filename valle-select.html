@@ -385,7 +385,7 @@
       }
 
       _close() {
-          this.open = false;
+        this.open = false;
       }
 
       _keydownToggleOpen(event) {
@@ -447,6 +447,8 @@
 
         if (this.error) this.removeAttribute('error');
 
+        if (!option.selected) option.selected = true;
+
       }
 
       static get properties() {
@@ -470,7 +472,7 @@
           value: String,
           options: Array,
           current: {
-            type: String,
+            type: Object,
             observer: '_setSelectedObserver'
           }
         };
