@@ -12,13 +12,17 @@
         display: flex;
         align-items: center;
       }
-    
+
       @media (min-width: 420px) {
         :host {
           min-height: 32px;
           padding: 0 24px;
           font-size: 15px;
         }
+      }
+
+      :host(:hover) {
+        cursor: pointer;
       }
 
       :host(:focus) {
@@ -35,21 +39,23 @@
   <script>
     class valleOption extends Polymer.Element {
 
-      static get is() { return 'valle-option'; }
+      static get is() { 
+        return 'valle-option'; 
+      }
 
       connectedCallback() {
         super.connectedCallback();
 
         this.setAttribute('role', 'option');
         this.setAttribute('tabindex', '0');
-        this.addEventListener('click', this._toggleSelected.bind(this));
+        this.addEventListener('click', this._setSelected.bind(this));
         this.addEventListener('keydown', this._handleKeyDown.bind(this));
         this.addEventListener('mouseover', this._handleHover.bind(this));
       }
 
       _handleKeyDown(e) {
-        const pressSpace = e.which == 32 || e.keyCode == 32;
-        const pressEnter = e.which == 13 || e.keyCode == 13;
+        const pressSpace = e.which === 32 || e.keyCode === 32;
+        const pressEnter = e.which === 13 || e.keyCode === 13;
 
         if (pressSpace || pressEnter) {
           e.preventDefault();
@@ -57,16 +63,14 @@
         }
       }
 
-      _toggleSelected() {
-        this.hasAttribute('selected')
-        ? this.removeAttribute('selected')
-        : this.setAttribute('selected', 'true')
+      _setSelected() {
+        this.setAttribute('selected', 'true');
       }
 
       _toggleSelectedObserver(boolean) {
         boolean
-        ? this.setAttribute('aria-selected', 'true')
-        : this.setAttribute('aria-selected', 'false')
+          ? this.setAttribute('aria-selected', 'true')
+          : this.setAttribute('aria-selected', 'false');
       }
 
       _handleHover() {

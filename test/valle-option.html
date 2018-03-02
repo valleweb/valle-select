@@ -60,7 +60,7 @@
 
         });
 
-        test('When clicked, toggle the selected state', () => {
+        test('When clicked, set the selected state', () => {
 
           assert.equal(optionDefault.getAttribute('aria-selected'), 'false');
           assert.isFalse(optionDefault.hasAttribute('selected'));
@@ -69,11 +69,6 @@
 
           assert.equal(optionDefault.getAttribute('aria-selected'), 'true');
           assert.isTrue(optionDefault.hasAttribute('selected'));
-
-          optionDefault.click();
-
-          assert.equal(optionDefault.getAttribute('aria-selected'), 'false');
-          assert.isFalse(optionDefault.hasAttribute('selected'));
 
         });
 

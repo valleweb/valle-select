@@ -157,7 +157,7 @@
 
         });
 
-        test('When open, should move the focus fot the selected option', () => {
+        test('When open, should move the focus for the selected option', () => {
 
           selectwithDefaultOption.open = true;
           assert.equal(document.activeElement.value, 'option 3');
@@ -385,6 +385,139 @@
           assert.equal(input.value, allOptions[0].value);
 
           //assert.isTrue(allOptions[0].hasAttribute('selected'));
+
+        });
+
+      });
+
+      suite('Integration - required', () => {
+
+        let selectWithRequired;
+
+        setup(() => {
+          selectWithRequired = fixture('required');
+        });
+
+        test('Should render a semantic required select', () => {
+          assert.isTrue(selectWithRequired.hasAttribute('aria-required'));
+        });
+
+        test('Should send the error with blur (if input is empty)', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+          MockInteractions.blur(button);
+
+          assert.isTrue(selectWithRequired.hasAttribute('error'));
+
+        });
+        
+        test('Dont send the error with blur (if input has any content)', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          const input = selectWithRequired.shadowRoot.querySelector('#input');
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+          input.value = "Exemplo";
+
+          MockInteractions.blur(button);
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+
+        });
+
+        test('Should remove the error with any option is selected', () => {
+
+          const button = selectWithRequired.shadowRoot.querySelector('#button');
+          MockInteractions.blur(button);
+
+          assert.isTrue(selectWithRequired.hasAttribute('error'));
+
+          const option = selectWithRequired.querySelectorAll('valle-option')[1];
+
+          option.click();
+
+          assert.isFalse(selectWithRequired.hasAttribute('error'));
+          
+        });
+
+      });
+
+      suite('Integration - current', () => {
+
+        let selectWithDefaultOption,
+            allOptions;
+
+        setup(() => {
+          selectWithDefaultOption = fixture('withDefaultOption');
+          allOptions = selectWithDefaultOption.querySelectorAll('valle-option');
+        });
+
+        test('Should return the current (selected) option via javascript api', () => {
+          assert.equal(selectWithDefaultOption.current, allOptions[2]);
+        });
+
+        test('Should set the current (selected) option via javascript api', () => {
+
+          const input = selectWithDefaultOption.shadowRoot.querySelector('#input');
+          const button = selectWithDefaultOption.shadowRoot.querySelector('#button');
+
+          assert.isFalse(allOptions[0].hasAttribute('selected'));
+
+          selectWithDefaultOption.current = allOptions[0];
+
+          assert.equal(input.value, allOptions[0].value);
+
+          assert.isTrue(allOptions[0].hasAttribute('selected'));
+
+        });
+
+      });
+
+      suite('Integration - backdrop', () => {
+
+        let selectDefault,
+            backdrop;
+
+        setup(() => {
+          selectDefault = fixture('default');
+          backdrop = selectDefault.shadowRoot.querySelector('#backdrop');
+        });
+
+        test('When open Should render a backdrop', () => {
+
+          const backdropStyle = window.getComputedStyle(backdrop, null);
+
+          assert.equal(backdropStyle.getPropertyValue('position'), 'fixed');
+          assert.equal(backdropStyle.getPropertyValue('top'), '0px');
+          assert.equal(backdropStyle.getPropertyValue('left'), '0px');
+          assert.equal(backdropStyle.getPropertyValue('width'), '100%');
+          assert.equal(backdropStyle.getPropertyValue('height'), '100%');
+          assert.equal(backdropStyle.getPropertyValue('z-index'), '2');
+
+          assert.equal(backdrop.style.display, 'none');
+
+        });
+
+        test('When open Should render a backdrop', () => {
+          
+          assert.equal(backdrop.style.display, 'none');
+
+          selectDefault.open = true;
+          
+          assert.equal(backdrop.style.display, 'block');
+
+        });
+
+        test('When click in backdrop, should close the select', () => {
+
+          selectDefault.open = true;
+          
+          backdrop.click();
+
+          assert.equal(selectDefault.open, false);
 
         });
 

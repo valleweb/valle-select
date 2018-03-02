@@ -97,7 +97,7 @@
           assert.equal(input.value, '');
           assert.equal(input.id, 'input');
 
-          assert.isTrue(input.disabled);
+          assert.isTrue(input.hasAttribute('readonly'));
 
           assert.isTrue(input.hasAttribute('tabindex'));
           assert.equal(input.getAttribute('tabindex'), '-1');
@@ -369,40 +369,52 @@
         test('Should toggle the disabled state with change the disabled attribute', () => {
 
           const button = select.shadowRoot.querySelector('#button');
+          const input = select.shadowRoot.querySelector('#input');
 
           assert.isFalse(button.disabled);
+          assert.isFalse(input.disabled);
 
           select.setAttribute('disabled', 'true');
+
           assert.isTrue(button.disabled);
+          assert.isTrue(input.disabled);
 
           select.removeAttribute('disabled');
+
           assert.isFalse(button.disabled);
+          assert.isFalse(input.disabled);
 
         });
 
         test('Should toggle the disabled attribute with javascript API', () => {
 
           const button = select.shadowRoot.querySelector('#button');
+          const input = select.shadowRoot.querySelector('#input');
 
           assert.isFalse(select.hasAttribute('disabled'));
           assert.isFalse(button.disabled);
+          assert.isFalse(input.disabled);
 
           select.disabled = true;
           assert.isTrue(select.hasAttribute('disabled'));
           assert.isTrue(button.disabled);
+          assert.isTrue(input.disabled);
 
           select.disabled = false;
           assert.isFalse(select.hasAttribute('disabled'));
           assert.isFalse(button.disabled);
+          assert.isFalse(input.disabled);
 
         });
 
         test('Should redner a disabled select with default', () => {
 
           const button = disabled.shadowRoot.querySelector('#button');
+          const input = disabled.shadowRoot.querySelector('#input');
 
           assert.isTrue(disabled.hasAttribute('disabled'));
           assert.isTrue(button.hasAttribute('disabled'));
+          assert.isTrue(input.hasAttribute('disabled'));
 
         });
 
