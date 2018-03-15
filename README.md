@@ -22,18 +22,6 @@ $ bower install valle-select --save
 
 3 - Start using it!
 
-<!--
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="valle-select.html">
-    <link rel="import" href="valle-option.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-
 ```html
 <valle-select label="Names" helpertext="Choose your name">
   <valle-option value="option 1">Example 1</valle-option>
