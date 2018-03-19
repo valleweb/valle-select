@@ -70,6 +70,12 @@
       </template>
     </test-fixture>
 
+    <test-fixture id="withAutofocus">
+      <template>
+        <valle-select placeholder="Example" id="focused" autofocus></valle-select>
+      </template>
+    </test-fixture>
+
     <script>
       suite('valle-select - default', () => {
 
@@ -434,6 +440,25 @@
 
           assert.equal(input.placeholder, 'Example');
 
+        });
+
+      });
+
+      suite('valle-select - autofocus', () => {
+
+        let autofocus;
+
+        setup(() => {
+          autofocus = fixture('withAutofocus');
+        });
+
+        test('Should render select with focus', (done) => {
+
+          flush(() => {
+            assert.equal(document.activeElement.id, 'focused');
+            done();
+          });
+          
         });
 
       });

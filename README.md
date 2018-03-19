@@ -44,6 +44,7 @@ Property      | Type        | Default   | Description
 `placeholder` | *String*    | `""`      | Default placeholder
 `error`       | *Boolean*   | `false`   | Error state
 `open`        | *Boolean*   | `false`   | Open state
+`autofocus`   | *Boolean*   | `false`   | Default autofocus
 
 ### Styling
 

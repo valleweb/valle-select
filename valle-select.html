@@ -229,6 +229,12 @@
       ready() {
         super.ready();
 
+        Polymer.RenderStatus.afterNextRender(this, () => {
+          if (this.autofocus) {
+            this.$.button.focus();
+          }
+        });
+        
         this.$.button.addEventListener('click', this._toggleOpen.bind(this));
         this.$.input.addEventListener('click', this._toggleOpen.bind(this));
         this.$.button.addEventListener('keydown', this._keydownToggleOpen.bind(this));
@@ -481,6 +487,10 @@
           current: {
             type: Object,
             observer: '_setSelectedObserver'
+          },
+          autofocus: {
+            type: Boolean,
+            value: false
           }
         };
       }
