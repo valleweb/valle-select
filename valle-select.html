@@ -446,22 +446,22 @@
       }
 
       _setSelectedObserver(option) {
+        if(option) {
+          const optionValue = option.getAttribute('value'); // TODO: Resolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
 
-        const optionValue = option.getAttribute('value'); // TODO: Resolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
+          this.value = optionValue;
+          this.$.input.value = optionValue;
 
-        this.value = optionValue;
-        this.$.input.value = optionValue;
+          this.$.listbox.setAttribute('aria-activedescendant', option.id);
 
-        this.$.listbox.setAttribute('aria-activedescendant', option.id);
+          this.state.allOptions.forEach((oldOption) => {
+            if(oldOption.selected) oldOption.selected = false;
+          });
+          
+          if (this.error) this.removeAttribute('error');
 
-        this.state.allOptions.forEach((oldOption) => {
-          if(oldOption.selected) oldOption.selected = false;
-        });
-        
-        if (this.error) this.removeAttribute('error');
-
-        if (!option.selected) option.selected = true;
-
+          if (!option.selected) option.selected = true;
+        }
       }
 
       static get properties() {
