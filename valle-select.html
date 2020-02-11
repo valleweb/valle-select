@@ -450,7 +450,8 @@
           const optionValue = option.getAttribute('value'); // TODO: Resolve undefined result on option.value (option.value broken the element, but cant catch from unit tests)
 
           this.value = optionValue;
-          this.$.input.value = optionValue;
+          this.$.input.value = option.innerText;
+          this.$.input['data-valle-value'] = optionValue;
 
           this.$.listbox.setAttribute('aria-activedescendant', option.id);
 

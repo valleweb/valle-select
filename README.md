@@ -59,14 +59,15 @@ Custom property       | Default                  | Description
 
 The following properties are available via javascript:
 
-Property    | Type      | Description
-:---        |:---       |:---
-value       | `String`  | Selected value
-disabled    | `Boolean` | Disabled state
-options     | `Array`   | All `valle-options` available
-open        | `Boolean` | Open state
-error       | `Boolean` | Error state
-current     | `Object`  | Selected `valle-options`
+Property         | Type      | Description
+:---             |:---       |:---
+value            | `String`  | Selected value from option content
+data-valle-value | `String`  | Selected value from option value
+disabled         | `Boolean` | Disabled state
+options          | `Array`   | All `valle-options` available
+open             | `Boolean` | Open state
+error            | `Boolean` | Error state
+current          | `Object`  | Selected `valle-options`
 
 ## &lt;valle-option&gt;
 
