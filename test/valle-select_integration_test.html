@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>valle-select integrations tests</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="./valle-select_integration_test.js"></script>
+    <script type="module" src="../valle-select.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="default">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">option 1</valle-option>
+          <valle-option value="option 2">option 2</valle-option>
+          <valle-option value="option 3">option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withDefaultOption">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">option 1</valle-option>
+          <valle-option value="option 2">option 2</valle-option>
+          <valle-option selected value="option 3">option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="open">
+      <template>
+        <valle-select>
+          <valle-option value="option 1">option 1</valle-option>
+          <valle-option value="option 2">option 2</valle-option>
+          <valle-option selected value="option 3">option 3</valle-option>
+          <valle-option value="option 4">option 4</valle-option>
+          <valle-option value="option 5">option 5</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="required">
+      <template>
+        <valle-select required>
+          <valle-option value="option 1">option 1</valle-option>
+          <valle-option value="option 2">option 2</valle-option>
+          <valle-option value="option 3">option 3</valle-option>
+        </valle-select>
+      </template>
+    </test-fixture>
+
+  </body>
+</html>
