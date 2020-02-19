@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>valle-select tests</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="./valle-select_test.js"></script>
+    <script type="module" src="../valle-select.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="default">
+      <template>
+        <valle-select label="example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withHelperText">
+      <template>
+        <valle-select label="example" helpertext="helper example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withHelperTextAndError">
+      <template>
+        <valle-select label="example" helpertext="helper example" error></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextAndError">
+      <template>
+        <valle-select label="example" errortext="error example" error></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextErrorAndHelperText">
+      <template>
+        <valle-select label="example" errortext="error example" error helpertext="text example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withErrorTextAndNoError">
+      <template>
+        <valle-select label="example" errortext="error example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withDisabled">
+      <template>
+        <valle-select disabled></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withRequired">
+      <template>
+        <valle-select required></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withPlaceholder">
+      <template>
+        <valle-select placeholder="Example"></valle-select>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="withAutofocus">
+      <template>
+        <valle-select placeholder="Example" id="focused" autofocus></valle-select>
+      </template>
+    </test-fixture>
+
+  </body>
+</html>
