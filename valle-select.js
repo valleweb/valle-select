@@ -3,7 +3,7 @@ import '@polymer/polymer/lib/elements/dom-if.js';
 import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
-export class ValleSelect extends PolymerElement {
+export default class ValleSelect extends PolymerElement {
   static get template() {
     return html`
       <style>
@@ -67,7 +67,7 @@ export class ValleSelect extends PolymerElement {
           right: 0;
           top: 28px;
         }
-        
+
         .button:hover {
           cursor: pointer;
         }
@@ -162,10 +162,10 @@ export class ValleSelect extends PolymerElement {
         id="button"
         class="button">
 
-        <svg 
+        <svg
           fill="#000000"
           height="24"
-          viewBox="0 0 24 24" 
+          viewBox="0 0 24 24"
           width="24"
           xmlns="http://www.w3.org/2000/svg"
           class="icon">
@@ -190,7 +190,7 @@ export class ValleSelect extends PolymerElement {
 
       <label id="label" class="label">[[label]]</label>
 
-      <ul 
+      <ul
         role="listbox"
         tabindex="-1"
         style="display: none;"
@@ -213,7 +213,7 @@ export class ValleSelect extends PolymerElement {
       </template>
     `;
 	};
-	
+
 	static get properties() {
 		return {
 			label: String,
@@ -259,7 +259,7 @@ export class ValleSelect extends PolymerElement {
         this.$.button.focus();
       }
     });
-    
+
     this.$.button.addEventListener('click', this._toggleOpen.bind(this));
     this.$.input.addEventListener('click', this._toggleOpen.bind(this));
     this.$.button.addEventListener('keydown', this._keydownToggleOpen.bind(this));
@@ -272,7 +272,7 @@ export class ValleSelect extends PolymerElement {
 
     // Options controls
     // -----------------------------
-    
+
     if (this.state.allOptions.length > 0) {
       this.state.allOptions.forEach((option, index) => {
 
@@ -281,7 +281,7 @@ export class ValleSelect extends PolymerElement {
         if (option.hasAttribute('selected')) {
           this._setSelectedStateToOption(option);
         }
-      
+
         option.addEventListener('click', () => {
           this._setSelectedStateToOption(option);
         });
@@ -294,7 +294,7 @@ export class ValleSelect extends PolymerElement {
     }
 
     this.options = this.state.allOptions;
-    
+
   }
 
   _setSelectedStateToOption(option) {
@@ -318,7 +318,7 @@ export class ValleSelect extends PolymerElement {
       event.preventDefault();
       this._moveFocusToBackOption(index);
     }
-    
+
     if (pressDown) {
       event.preventDefault();
       this._moveFocusToNextOption(index);
@@ -390,7 +390,7 @@ export class ValleSelect extends PolymerElement {
   }
 
   _toggleOpenObserver(boolean) {
-    
+
     const listbox = this.$.listbox;
     const button = this.$.button;
 
@@ -415,7 +415,7 @@ export class ValleSelect extends PolymerElement {
       button.setAttribute('aria-expanded', 'false');
       button.setAttribute('aria-pressed', 'false');
       button.focus();
-      
+
       this.$.backdrop.style.display = 'none';
     }
 
@@ -434,7 +434,7 @@ export class ValleSelect extends PolymerElement {
     if (pressEnter) {
       event.preventDefault();
     }
-    
+
     if (pressArows) {
       event.preventDefault();
       this._toggleOpen();
@@ -483,7 +483,7 @@ export class ValleSelect extends PolymerElement {
       this.state.allOptions.forEach((oldOption) => {
         if(oldOption.selected) oldOption.selected = false;
       });
-      
+
       if (this.error) this.removeAttribute('error');
 
       if (!option.selected) option.selected = true;
@@ -492,86 +492,3 @@ export class ValleSelect extends PolymerElement {
 };
 
 customElements.define('valle-select', ValleSelect);
-
-export class ValleOption extends PolymerElement {
-  static get template() {
-    return html`
-      <style>
-        :host {
-          min-height: 48px;
-          padding: 0 16px;
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-        }
-
-        @media (min-width: 420px) {
-          :host {
-            min-height: 32px;
-            padding: 0 24px;
-            font-size: 15px;
-          }
-        }
-
-        :host(:hover) {
-          cursor: pointer;
-        }
-
-        :host(:focus) {
-          outline: none;
-          background-color: #eee;
-        }
-      </style>
-
-      <slot></slot>
-    `;
-	};
-	
-	static get properties() {
-		return {
-      value: String,
-      selected: { 
-        type: Boolean,
-        value: false,
-        observer: '_toggleSelectedObserver',
-        reflectToAttribute: true
-      }
-		}
-  };
-  
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.setAttribute('role', 'option');
-    this.setAttribute('tabindex', '0');
-    this.addEventListener('click', this._setSelected.bind(this));
-    this.addEventListener('keydown', this._handleKeyDown.bind(this));
-    this.addEventListener('mouseover', this._handleHover.bind(this));
-  };
-
-  _handleKeyDown(e) {
-    const pressSpace = e.which === 32 || e.keyCode === 32;
-    const pressEnter = e.which === 13 || e.keyCode === 13;
-
-    if (pressSpace || pressEnter) {
-      e.preventDefault();
-      this.click();
-    }
-  };
-
-  _setSelected() {
-    this.setAttribute('selected', 'true');
-  };
-
-  _toggleSelectedObserver(boolean) {
-    boolean
-    ? this.setAttribute('aria-selected', 'true')
-    : this.setAttribute('aria-selected', 'false');
-  };
-
-  _handleHover() {
-    this.focus();
-  };
-};
-
-customElements.define('valle-option', ValleOption);

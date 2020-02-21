@@ -60,7 +60,7 @@ suite('valle-select - default', () => {
     assert.equal(button.getAttribute('aria-describedby'), 'description');
 
     assert.equal(button.id, 'button');
-    
+
   });
 
   test('Should render the listbox with correct default props', () => {
@@ -164,7 +164,7 @@ suite('valle-select - with error and error text', () => {
 
       const errorText = selectWithErrorTextAndError.shadowRoot.querySelector('span');
       const helpText = selectWithErrorTextAndError.shadowRoot.querySelector('small');
-     
+
       assert.equal(helpText.textContent, ": ");
 
       assert.equal(errorText.nodeName, 'SPAN');
@@ -209,7 +209,7 @@ suite('valle-select - with error and error text', () => {
         assert.equal(errorTextAfter.nodeName, 'SPAN');
         done();
       });
-      
+
     });
   });
 
@@ -238,7 +238,7 @@ suite('valle-select - open behaviors', () => {
   test('Should toggle the open attribute when click', () => {
 
     const button = select.shadowRoot.querySelector('#button');
-              
+
     assert.equal(select.hasAttribute('open'), false);
 
     button.click();
@@ -265,7 +265,7 @@ suite('valle-select - open behaviors', () => {
 
     assert.isFalse(select.hasAttribute('open'));
 
-    MockInteractions.pressAndReleaseKeyOn(button, 38);
+    pressAndReleaseKeyOn(button, 38);
 
     assert.isTrue(select.hasAttribute('open'));
 
@@ -277,7 +277,7 @@ suite('valle-select - open behaviors', () => {
 
     assert.isFalse(select.hasAttribute('open'));
 
-    MockInteractions.pressAndReleaseKeyOn(button, 40);
+    pressAndReleaseKeyOn(button, 40);
 
     assert.isTrue(select.hasAttribute('open'));
 
@@ -381,7 +381,7 @@ suite('valle-select - autofocus', () => {
       assert.equal(document.activeElement.id, 'focused');
       done();
     });
-    
+
   });
 
 });

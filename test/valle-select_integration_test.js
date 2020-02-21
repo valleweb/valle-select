@@ -14,7 +14,7 @@ suite('Integration - basic', () => {
   });
 
   test('Should add the dynamic id in all options', () => {
-    
+
     assert.equal(options[0].id, 'listbox0');
     assert.equal(options[1].id, 'listbox1');
     assert.equal(options[2].id, 'listbox2');
@@ -78,12 +78,12 @@ suite('Integration - basic', () => {
   });
 
   test('Should render a select with default option', () => {
-    
+
     const input = selectwithDefaultOption.shadowRoot.querySelector('#input');
     const button = selectwithDefaultOption.shadowRoot.querySelector('#button');
     const listbox = selectwithDefaultOption.shadowRoot.querySelector('#listbox');
     const selectedOption = selectwithDefaultOption.querySelector('valle-option[selected]');
-    
+
     assert.equal(input.value, selectedOption.value);
     assert.equal(listbox.getAttribute('aria-activedescendant'), selectedOption.id);
 
@@ -143,7 +143,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 38);
+    pressAndReleaseKeyOn(option3, 38);
 
     assert.equal(document.activeElement.value, 'option 2');
 
@@ -153,7 +153,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 40);
+    pressAndReleaseKeyOn(option3, 40);
 
     assert.equal(document.activeElement.value, 'option 4');
 
@@ -163,7 +163,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 36);
+    pressAndReleaseKeyOn(option3, 36);
 
     assert.equal(document.activeElement.value, 'option 1');
   });
@@ -173,7 +173,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 35);
+    pressAndReleaseKeyOn(option3, 35);
 
     assert.equal(document.activeElement.value, 'option 5');
 
@@ -183,7 +183,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 33);
+    pressAndReleaseKeyOn(option3, 33);
 
     assert.equal(document.activeElement.value, 'option 1');
 
@@ -193,17 +193,17 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.equal(document.activeElement.value, 'option 3');
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 34);
+    pressAndReleaseKeyOn(option3, 34);
 
     assert.equal(document.activeElement.value, 'option 5');
 
   });
-  
+
   test('When press esc should close the select', () => {
 
     assert.isTrue(openedSelect.open);
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 27);
+    pressAndReleaseKeyOn(option3, 27);
 
     assert.isFalse(openedSelect.open);
 
@@ -213,7 +213,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.isTrue(openedSelect.open);
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 13);
+    pressAndReleaseKeyOn(option3, 13);
 
     assert.isFalse(openedSelect.open);
 
@@ -223,7 +223,7 @@ suite('Integration - keyboard and close controls', () => {
 
     assert.isTrue(openedSelect.open);
 
-    MockInteractions.pressAndReleaseKeyOn(option3, 32);
+    pressAndReleaseKeyOn(option3, 32);
 
     assert.isFalse(openedSelect.open);
 
@@ -234,7 +234,7 @@ suite('Integration - keyboard and close controls', () => {
     assert.isTrue(openedSelect.hasAttribute('open'));
 
     option3.click();
-    
+
     assert.isFalse(openedSelect.hasAttribute('open'));
 
   });
@@ -258,12 +258,12 @@ suite('Integration - required', () => {
     const button = selectWithRequired.shadowRoot.querySelector('#button');
     assert.isFalse(selectWithRequired.hasAttribute('error'));
 
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isTrue(selectWithRequired.hasAttribute('error'));
 
   });
-  
+
   test('Dont send the error with blur (if input has any content)', () => {
 
     const button = selectWithRequired.shadowRoot.querySelector('#button');
@@ -273,7 +273,7 @@ suite('Integration - required', () => {
 
     input.value = "Exemplo";
 
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isFalse(selectWithRequired.hasAttribute('error'));
 
@@ -282,7 +282,7 @@ suite('Integration - required', () => {
   test('Should remove the error with any option is selected', () => {
 
     const button = selectWithRequired.shadowRoot.querySelector('#button');
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isTrue(selectWithRequired.hasAttribute('error'));
 
@@ -291,7 +291,7 @@ suite('Integration - required', () => {
     option.click();
 
     assert.isFalse(selectWithRequired.hasAttribute('error'));
-    
+
   });
 
 });
@@ -344,12 +344,12 @@ suite('Integration - required', () => {
     const button = selectWithRequired.shadowRoot.querySelector('#button');
     assert.isFalse(selectWithRequired.hasAttribute('error'));
 
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isTrue(selectWithRequired.hasAttribute('error'));
 
   });
-  
+
   test('Dont send the error with blur (if input has any content)', () => {
 
     const button = selectWithRequired.shadowRoot.querySelector('#button');
@@ -359,7 +359,7 @@ suite('Integration - required', () => {
 
     input.value = "Exemplo";
 
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isFalse(selectWithRequired.hasAttribute('error'));
 
@@ -368,7 +368,7 @@ suite('Integration - required', () => {
   test('Should remove the error with any option is selected', () => {
 
     const button = selectWithRequired.shadowRoot.querySelector('#button');
-    MockInteractions.blur(button);
+    blur(button);
 
     assert.isTrue(selectWithRequired.hasAttribute('error'));
 
@@ -377,7 +377,7 @@ suite('Integration - required', () => {
     option.click();
 
     assert.isFalse(selectWithRequired.hasAttribute('error'));
-    
+
   });
 
 });
@@ -439,11 +439,11 @@ suite('Integration - backdrop', () => {
   });
 
   test('When open Should render a backdrop', () => {
-    
+
     assert.equal(backdrop.style.display, 'none');
 
     selectDefault.open = true;
-    
+
     assert.equal(backdrop.style.display, 'block');
 
   });
@@ -451,7 +451,7 @@ suite('Integration - backdrop', () => {
   test('When click in backdrop, should close the select', () => {
 
     selectDefault.open = true;
-    
+
     backdrop.click();
 
     assert.equal(selectDefault.open, false);
