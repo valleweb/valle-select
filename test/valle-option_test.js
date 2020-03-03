@@ -66,7 +66,7 @@ suite('valle-option - default', () => {
     assert.equal(optionDefault.getAttribute('aria-selected'), 'false');
     assert.isFalse(optionDefault.hasAttribute('selected'));
 
-    MockInteractions.pressSpace(optionDefault);
+    pressSpace(optionDefault);
 
     assert.equal(optionDefault.getAttribute('aria-selected'), 'true');
     assert.isTrue(optionDefault.hasAttribute('selected'));
@@ -78,7 +78,7 @@ suite('valle-option - default', () => {
     assert.equal(optionDefault.getAttribute('aria-selected'), 'false');
     assert.isFalse(optionDefault.hasAttribute('selected'));
 
-    MockInteractions.pressEnter(optionDefault);
+    pressEnter(optionDefault);
 
     assert.equal(optionDefault.getAttribute('aria-selected'), 'true');
     assert.isTrue(optionDefault.hasAttribute('selected'));

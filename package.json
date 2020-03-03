@@ -1,11 +1,11 @@
 {
   "name": "@valle/valle-select",
   "description": "Awesome valle-select - Web Component using Polymer 3",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [
     "valleweb"
   ],
-  "main": "valle-select.js",
+  "main": "main.js",
   "homepage": "https://github.com/valleweb/valle-select",
   "bugs": {
     "url": "https://github.com/valleweb/valle-select/issues"
