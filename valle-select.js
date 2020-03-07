@@ -185,6 +185,7 @@ export default class ValleSelect extends PolymerElement {
         aria-owns="listbox"
         aria-labelledby="label"
         placeholder=[[placeholder]]
+        value=[[value]]
         id="input"
         class="input">
 
