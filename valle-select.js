@@ -29,6 +29,7 @@ export default class ValleSelect extends PolymerElement {
           outline: 0;
           padding: 8px 24px 8px 0;
           width: 100%;
+          height: 50px;
         }
 
         .input:hover {
@@ -65,7 +66,7 @@ export default class ValleSelect extends PolymerElement {
           margin: 0;
           position: absolute;
           right: 0;
-          top: 28px;
+          top: 42px;
         }
 
         .button:hover {
@@ -94,7 +95,7 @@ export default class ValleSelect extends PolymerElement {
 
         .listbox {
           position: absolute;
-          top: 65px;
+          top: 83px;
           left: 0;
           background:#fff;
           width: 100%;
@@ -151,6 +152,7 @@ export default class ValleSelect extends PolymerElement {
         :host([required]) .label::after {
           content: ' *';
         }
+
       </style>
 
       <div class="backdrop" id="backdrop" style="display: none;"></div>
