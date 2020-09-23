@@ -50,17 +50,20 @@ import "@valle/valle-select/valle-select.js";
 
 ### Properties
 
-Property      | Type        | Default   | Description
-:---          |:---         |:---       |:---
-`label`       | *String*    | `""`      | Default label
-`disabled`    | *Boolean*   | `false`   | Disabled state
-`required`    | *Boolean*   | `false`   | Required validate
-`helpertext`  | *String*    | `""`      | Description text for help
-`errortext`   | *String*    | `""`      | Error message
-`placeholder` | *String*    | `""`      | Default placeholder
-`error`       | *Boolean*   | `false`   | Error state
-`open`        | *Boolean*   | `false`   | Open state
-`autofocus`   | *Boolean*   | `false`   | Default autofocus
+Property        | Type        | Default   | Description
+:---            |:---         |:---       |:---
+`label`         | *String*    | `""`      | Default label
+`disabled`      | *Boolean*   | `false`   | Disabled state
+`required`      | *Boolean*   | `false`   | Required validate
+`helpertext`    | *String*    | `""`      | Description text for help
+`errortext`     | *String*    | `""`      | Error message
+`placeholder`   | *String*    | `""`      | Default placeholder
+`error`         | *Boolean*   | `false`   | Error state
+`open`          | *Boolean*   | `false`   | Open state
+`autofocus`     | *Boolean*   | `false`   | Default autofocus
+`tooltip`       | *String*    | `""`      | A tooltip for inputs
+`tooltippos`    | *String*    | `""`      | Tooltip position (available: `top-right`)
+`tooltiplength` | *String*    | `""`      | Tooltip length (available: `small`, `medium` and `large`)
 
 ### Styling
 
@@ -70,6 +73,7 @@ Custom property       | Default                  | Description
 :---                  |:---                      |:---
 --valle-select-color  | `rgba(5, 159, 183, .87)` | Primary color
 --valle-input-width   | `100%`                   | Select width
+--icon-tooltip-color  | `#000`                   | Icon tooltip color
 
 ### API
 
