@@ -11,10 +11,20 @@ export default class ValleSelect extends PolymerElement {
           display: inline-block;
           position: relative;
           width: var(--valle-input-width ,100%);
+          --tooltip-border-radius: 2px;
+          --tooltip-color: rgba(16, 16, 16, 0.95);
+          --tooltip-text-color: #fff;
+          --tooltip-font-size: 12px;
+          --tooltip-move: 4px;
         }
 
         .visual-hidden {
           opacity: 0;
+        }
+
+        .visual-hidden-tooltip {
+          position: absolute;
+          left: -10000px;
         }
 
         .input {
@@ -153,6 +163,149 @@ export default class ValleSelect extends PolymerElement {
           content: ' *';
         }
 
+        .tooltip {
+          overflow: visible;
+          width: 24px;
+          height: 24px;
+          position: absolute;
+          cursor: help;
+          top: 11px;
+          right: 0;
+          border-radius: 3px;
+          transition: background .3s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .tooltip:focus {
+          background: #ecebeb;
+          outline: none;
+        }
+
+        .tooltip svg {
+          fill: var(--icon-tooltip-color, #000);
+          width: 18px;
+          height: 18px;
+          overflow: visible;
+        }
+
+        .tooltip:hover svg{
+          fill: var(--valle-input-color, rgba(5, 159, 183, .87));
+        }
+
+        .tooltip::after {
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.18s ease-out 0.18s;
+          text-indent: 0;
+          font-weight: normal;
+          font-style: normal;
+          text-shadow: none;
+          font-size: var(--tooltip-font-size);
+          background: var(--tooltip-color);
+          border-radius: 2px;
+          color: var(--tooltip-text-color);
+          border-radius: var(--tooltip-border-radius);
+          content: attr(id);
+          padding: .5em 1em;
+          position: absolute;
+          white-space: nowrap;
+          z-index: 10;
+        }
+
+        .tooltip::before {
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
+          border-top-color: var(--tooltip-color);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.18s ease-out 0.18s;
+          content: "";
+          position: absolute;
+          z-index: 10;
+        }
+
+        .tooltip:hover::before, .tooltip:hover::after,
+        .tooltip:focus::before, .tooltip:focus::after {
+          opacity: 1;
+          pointer-events: none;
+        }
+
+        :host([tooltippos*="-right"]) .tooltip::after {
+          right: 0;
+        }
+
+        :host([tooltippos*="-right"]) .tooltip::before {
+          right: 5px;
+        }
+
+        :host([tooltippos*="-right"]) .tooltip:hover::after {
+          transform: translate(0, 0);
+        }
+
+        :host([tooltippos*="-right"]) .tooltip:hover::before {
+          transform: translate(0, 0);
+        }
+
+        :host([tooltippos^="top"]) .tooltip::before, 
+        :host([tooltippos^="top"]) .tooltip::after {
+          bottom: 100%;
+          transform-origin: top;
+          transform: translate(0, var(--tooltip-move));
+        }
+
+        :host([tooltippos^="top"]) .tooltip::after {
+          margin-bottom: 10px;
+        }
+
+        :host([tooltippos="top"]) .tooltip::before, :host([tooltippos="top"]) .tooltip::after {
+          left: 50%;
+          transform: translate(-50%, var(--tooltip-move));
+        }
+
+        :host([tooltippos="right"]) .tooltip:hover::after {
+          transform: translate(0, -50%);
+        }
+
+        :host([tooltippos="right"]) .tooltip:hover::before {
+          transform: translate(0, -50%);
+        }
+
+        :host([tooltippos="right"]) .tooltip:hover::after, :host([tooltippos="right"]) .tooltip:hover::before {
+          left: 100%;
+          top: 50%;
+          transform: translate(calc(var(--balloon-move) * -1), -50%);
+        }
+
+        :host([tooltippos="right"]) .tooltip:hover::after {
+          margin-left: 10px;
+        }
+
+        :host([tooltippos="right"]) .tooltip:hover::before {
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
+          border-right-color: var(--tooltip-color);
+        }
+
+        :host([tooltiplength]) .tooltip::after {
+          white-space: normal;
+        }
+
+        :host([tooltiplength="small"]) .tooltip::after {
+          width: 80px;
+        }
+
+        :host([tooltiplength="medium"]) .tooltip::after {
+          width: 150px;
+        }
+
+        :host([tooltiplength="large"]) .tooltip::after {
+          width: 260px;
+        }
+
       </style>
 
       <div class="backdrop" id="backdrop" style="display: none;"></div>
@@ -194,6 +347,15 @@ export default class ValleSelect extends PolymerElement {
         class="input">
 
       <label id="label" class="label">[[label]]</label>
+
+      <template is="dom-if" if=[[tooltip]]>
+        <span class="tooltip" role="tooltip" id=[[tooltip]] tabindex="1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px">
+            <path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <small class="visual-hidden-tooltip">[[tooltip]]</small>
+        </span>
+      </template>
 
       <ul
         role="listbox"
@@ -246,7 +408,10 @@ export default class ValleSelect extends PolymerElement {
       autofocus: {
         type: Boolean,
         value: false
-      }
+      },
+      tooltip: String,
+      tooltippos: String,
+      tooltiplength: String,
 		}
   };
 
