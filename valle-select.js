@@ -55,6 +55,10 @@ export default class ValleSelect extends PolymerElement {
           top: 0;
         }
 
+        .tooltip ~ .label {
+          padding-right: 22px; /* Adjust for break line with helper icon */
+        }
+
         .button:focus .icon {
           fill: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
@@ -176,6 +180,7 @@ export default class ValleSelect extends PolymerElement {
           display: flex;
           align-items: center;
           justify-content: center;
+          z-index: 2;
         }
 
         .tooltip:focus {
@@ -346,8 +351,6 @@ export default class ValleSelect extends PolymerElement {
         id="input"
         class="input">
 
-      <label id="label" class="label">[[label]]</label>
-
       <template is="dom-if" if=[[tooltip]]>
         <span class="tooltip" role="tooltip" id=[[tooltip]]>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px">
@@ -356,6 +359,8 @@ export default class ValleSelect extends PolymerElement {
           <small class="visual-hidden-tooltip">[[tooltip]]</small>
         </span>
       </template>
+
+      <label id="label" class="label">[[label]]</label>
 
       <ul
         role="listbox"
