@@ -30,7 +30,7 @@ export default class ValleSelect extends PolymerElement {
         .input {
           background-color: #fff;
           box-sizing: border-box;
-          border: 1px solid rgba(0, 0, 0, .87);
+          border: 2px solid rgba(0, 0, 0, .87);
           border-radius: 4px;
           color: rgba(0, 0, 0, .87);
           display: block;
@@ -56,7 +56,7 @@ export default class ValleSelect extends PolymerElement {
           display: block;
           color: rgba(0, 0, 0, .54);
           font-size: 12px;
-          left: 13px;
+          left: 14px;
           padding: 0 4px;
           position: absolute;
           top: 21px;
@@ -74,7 +74,7 @@ export default class ValleSelect extends PolymerElement {
         }
 
         .button:focus + .input {
-          border: 2px solid var(--valle-input-color, rgba(5, 159, 183, .87));
+          border-color: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
 
         .button {
