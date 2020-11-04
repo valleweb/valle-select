@@ -30,45 +30,51 @@ export default class ValleSelect extends PolymerElement {
         .input {
           background-color: #fff;
           box-sizing: border-box;
-          border: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, .87);
+          border: 1px solid rgba(0, 0, 0, .87);
+          border-radius: 4px;
           color: rgba(0, 0, 0, .87);
           display: block;
           font-size: 16px;
           margin-top: 29px;
           outline: 0;
-          padding: 8px 24px 8px 0;
+          padding: 16px 12px 16px 16px;
           width: 100%;
           height: 50px;
+          transition: all .1s linear;
         }
 
         .input:hover {
           cursor: pointer;
         }
 
-        .label {
+        .input::placeholder {
           color: rgba(0, 0, 0, .54);
-          font-size: 12px;
-          left: 0;
-          padding-top: 16px;
-          position: absolute;
-          top: 0;
         }
 
-        .tooltip ~ .label {
-          padding-right: 22px; /* Adjust for break line with helper icon */
+        .label {
+          pointer-events: none;
+          display: block;
+          color: rgba(0, 0, 0, .54);
+          font-size: 12px;
+          left: 13px;
+          padding: 0 4px;
+          position: absolute;
+          top: 21px;
+          transition: all .1s linear;
+          box-sizing: border-box;
+          background-color: #fff;
         }
 
         .button:focus .icon {
           fill: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
 
-        .button:focus + .input + .label {
+        .button:focus + .input ~ .label {
           color: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
 
         .button:focus + .input {
-          border-color: var(--valle-input-color, rgba(5, 159, 183, .87));
+          border: 2px solid var(--valle-input-color, rgba(5, 159, 183, .87));
         }
 
         .button {
@@ -80,7 +86,7 @@ export default class ValleSelect extends PolymerElement {
           margin: 0;
           position: absolute;
           right: 0;
-          top: 42px;
+          top: 44px;
         }
 
         .button:hover {
@@ -89,6 +95,10 @@ export default class ValleSelect extends PolymerElement {
 
         .button:focus {
           outline: none;
+        }
+
+        .tooltip ~ .button {
+          top: 49px;
         }
 
         .description {
@@ -173,8 +183,8 @@ export default class ValleSelect extends PolymerElement {
           height: 24px;
           position: absolute;
           cursor: help;
-          top: 11px;
-          right: 0;
+          top: 30px;
+          right: 1px;
           border-radius: 3px;
           transition: background .3s;
           display: flex;
@@ -315,6 +325,15 @@ export default class ValleSelect extends PolymerElement {
 
       <div class="backdrop" id="backdrop" style="display: none;"></div>
 
+      <template is="dom-if" if=[[tooltip]]>
+        <span class="tooltip" role="tooltip" id=[[tooltip]]>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px">
+            <path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <small class="visual-hidden-tooltip">[[tooltip]]</small>
+        </span>
+      </template>
+
       <button
         aria-haspopup="listbox"
         aria-expanded="false"
@@ -350,15 +369,6 @@ export default class ValleSelect extends PolymerElement {
         value=[[value]]
         id="input"
         class="input">
-
-      <template is="dom-if" if=[[tooltip]]>
-        <span class="tooltip" role="tooltip" id=[[tooltip]]>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px">
-            <path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-          </svg>
-          <small class="visual-hidden-tooltip">[[tooltip]]</small>
-        </span>
-      </template>
 
       <label id="label" class="label">[[label]]</label>
 
