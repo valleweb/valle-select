@@ -39,12 +39,12 @@ export default class ValleSelect extends PolymerElement {
           outline: 0;
           padding: 16px 12px 16px 16px;
           width: 100%;
-          height: 50px;
           transition: all .1s linear;
         }
 
         .input:hover {
           cursor: pointer;
+          border-color: #000;
         }
 
         .input::placeholder {
@@ -102,7 +102,7 @@ export default class ValleSelect extends PolymerElement {
         }
 
         .tooltip ~ .button {
-          top: 49px;
+          top: 52px;
         }
 
         .description {
@@ -157,7 +157,7 @@ export default class ValleSelect extends PolymerElement {
 
         :host([disabled]) .input {
           background-color: initial;
-          border-bottom: 2px solid rgba(0, 0, 0, .38);
+          border: 2px solid rgba(0, 0, 0, .12);
           color: rgba(0, 0, 0, .38);
         }
 
