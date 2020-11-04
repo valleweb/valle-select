@@ -69,6 +69,10 @@ export default class ValleSelect extends PolymerElement {
           fill: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
 
+        .icon {
+          fill: rgb(166, 166, 166);
+        }
+
         .button:focus + .input ~ .label {
           color: var(--valle-input-color, rgba(5, 159, 183, .87));
         }
