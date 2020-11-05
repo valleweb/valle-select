@@ -89,7 +89,7 @@ export default class ValleSelect extends PolymerElement {
           padding: 0;
           margin: 0;
           position: absolute;
-          right: 0;
+          right: 1px;
           top: 44px;
         }
 
@@ -110,6 +110,7 @@ export default class ValleSelect extends PolymerElement {
           display: block;
           font-size: 12px;
           padding-top: 8px;
+          margin-left: 16px;
         }
 
         .backdrop {
