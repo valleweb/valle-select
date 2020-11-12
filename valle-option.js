@@ -32,10 +32,10 @@ export default class ValleOption extends PolymerElement {
 
       <slot></slot>
     `;
-	};
+  };
 
-	static get properties() {
-		return {
+  static get properties() {
+    return {
       value: String,
       selected: {
         type: Boolean,
@@ -43,7 +43,7 @@ export default class ValleOption extends PolymerElement {
         observer: '_toggleSelectedObserver',
         reflectToAttribute: true
       }
-		}
+    }
   };
 
   connectedCallback() {

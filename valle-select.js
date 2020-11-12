@@ -399,11 +399,11 @@ export default class ValleSelect extends PolymerElement {
         </span>
       </template>
     `;
-	};
+  };
 
-	static get properties() {
-		return {
-			label: String,
+  static get properties() {
+    return {
+      label: String,
       helpertext: String,
       errortext: String,
       open: {
@@ -432,7 +432,7 @@ export default class ValleSelect extends PolymerElement {
       tooltip: String,
       tooltippos: String,
       tooltiplength: String,
-		}
+    }
   };
 
   get state() {
